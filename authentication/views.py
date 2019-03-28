@@ -13,7 +13,6 @@ from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
 
 
-
 def login_user(request):
     form = AuthenticationForm()
     if request.method == 'POST':
