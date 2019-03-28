@@ -187,14 +187,15 @@ iframe {
   flex-wrap: wrap;
   align-items: stretch;
   flex-wrap: wrap;
-
+  padding-left: calc(70%/2);
+  padding-right: calc(70%/2);
 }
 
 .wrap-login100 {
   width: 520px;
-  min-height: 100vh;
+  min-height: 80vh;
   background: #fff;
-  border-radius: 2px;
+  border-radius: 15px;
   position: relative;
 }
 

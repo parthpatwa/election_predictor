@@ -9,8 +9,8 @@
   background: -moz-linear-gradient(bottom, #e8519e, #c77ff2);
   background: linear-gradient(bottom, #e8519e, #c77ff2); ">
     <div class="limiter">
-        <div class="container-login100 p-l-500">
-    <div class="wrap-login100 p-l-50 p-r-50 p-t-50 p-b-50" style="border-radius:15px">
+        <div class="container-login100 p-t-85 p-b-85">
+    <div class="wrap-login100 p-l-50 p-r-50 p-t-50 p-b-50" style="min-height: 50vh">
             <form class="login100-form validate-form" method="post">
                 {% csrf_token %}
                 <span class="login100-form-title p-b-30">
@@ -22,14 +22,15 @@
         {% for field in form %}
         <div class="wrap-input100 validate-input">
             <span class="label-input100 p-t-30">{{ field.label_tag }}</span><br>
-            {{ field }}
+            {{ field|add_class:"input100"}}
             <span class="focus-input100"></span>
         </div>
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
         {% endfor %}
-        <div class="container-login100-form-btn">
+
+        <div class="container-login100-form-btn p-t-20">
             <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button class="login100-form-btn">
