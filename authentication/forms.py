@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from authentication.models import UserProfile
 
 
 class Registration(forms.ModelForm):
@@ -10,7 +11,7 @@ class Registration(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username','email')
 
     def clean_confirm_password(self):
         password = self.cleaned_data.get('password')
