@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authentication',
+    'news_items',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'jiteshmalipeddi92@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ilovemyparents'
+EMAIL_PORT = 587
+
