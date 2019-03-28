@@ -58,6 +58,10 @@ def register(request):
             user.set_password(form.cleaned_data['password'])
             user.is_active = False
             user.save()
+
+            user.profile.location = 'Chennai'
+            user.profile.save()
+
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
             message = render_to_string('authentication/activate_email.html', {
