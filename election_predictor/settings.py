@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'news_items',
+    'group',
+    'party',
     'bootstrapform',
     'widget_tweaks'
 ]

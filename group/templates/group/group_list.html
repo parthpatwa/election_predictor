@@ -1,0 +1,12 @@
+{% extends 'authentication/base.html' %}
+{% block content %}
+    <a href="{% url  'authentication:group:create_group' request.user.pk %}" target="_blank" class="d-inline-block m-3">
+        <button type="button" class="btn btn-success d-inline-block">Create Group</button>
+    </a><br>
+    {% if groups %}
+        {% for group in groups %}
+            Name: {{ group.name }}<br>
+            Description: {{ group.description }}<br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
