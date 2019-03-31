@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from authentication.forms import Registration, PartyRegistration
@@ -50,7 +51,7 @@ def login_party(request):
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
                 else:
-                    return render(request, 'authentication/success.html')
+                    return render(request, 'party/party.html')
             else:
                 return HttpResponse('Party does not exist')
 
