@@ -27,6 +27,16 @@
           <p style="color: red">{{ error }}</p>
         {% endfor %}
         {% endfor %}
+
+        {% if form_party %}
+            {% for field in form_party %}
+            <div class="wrap-input100 validate-input">
+                <span class="label-input100 p-t-30">{{ field.label_tag }}</span><br>
+                {{ field|add_class:"input100" }}
+                <span class="focus-input100"></span>
+            </div>
+            {% endfor %}
+        {% endif %}
         <div class="container-login100-form-btn p-t-20">
             <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
@@ -35,7 +45,7 @@
                 </button>
             </div>
 
-            <a href="{% url 'authentication:login' %}" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
+            <a href="{% url 'authentication:login_user' %}" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
                 Sign in
                 <i class="fa fa-long-arrow-right m-l-5"></i>
             </a>

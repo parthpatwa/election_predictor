@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from authentication.models import Party
+
 
 class Registration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(
@@ -18,3 +20,9 @@ class Registration(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError('Password mismatch')
         return confirm_password
+
+
+class PartyRegistration(forms.ModelForm):
+    class Meta:
+        model = Party
+        fields = ['description', 'name']
