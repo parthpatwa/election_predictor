@@ -1,3 +1,4 @@
 from django.contrib import admin
+from authentication.models import Profile, Party, Usertype
 
-# Register your models here.
+admin.site.register([Profile, Party, Usertype])
