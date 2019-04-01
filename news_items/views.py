@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Article, Feed, Query
-from authentication.models import Profile
+from authentication.models import Usertype
 from .forms import FeedForm
 from django.shortcuts import redirect
 import ssl
@@ -42,7 +42,7 @@ def new_feed(request):
             existingFeed = Feed.objects.filter(url=url)
             que = Query()
             que.query = feed.query
-            que.query_fk = Profile.objects.get(user=request.user)
+            que.query_fk = Usertype.objects.get(user=request.user)
             feed = Feed()
             feed.url = url
             if len(existingFeed) == 0:

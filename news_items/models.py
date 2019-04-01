@@ -1,12 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
-from authentication.models import Profile
+from authentication.models import Usertype
 # Create your models here.
 
 
 class Query(models.Model):
     query = models.CharField(max_length=200, primary_key=True)
-    query_fk = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    query_fk = models.ForeignKey(Usertype, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.query

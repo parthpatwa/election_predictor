@@ -15,7 +15,7 @@
             <form class="login100-form validate-form" method="post">
                 {% csrf_token %}
                 <span class="login100-form-title p-b-30">
-                    Sign Up
+                    Create Group
                 </span>
         {% for field in form %}
         <div class="wrap-input100 validate-input">
@@ -41,14 +41,9 @@
             <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button class="login100-form-btn">
-                    Sign Up
+                    Create Group
                 </button>
             </div>
-
-            <a href="{% url 'authentication:login_user' %}" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
-                Sign in
-                <i class="fa fa-long-arrow-right m-l-5"></i>
-            </a>
         </div>
     </form>
     </div>

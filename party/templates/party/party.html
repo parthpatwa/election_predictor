@@ -1,0 +1,7 @@
+{% extends 'authentication/base.html' %}
+{% block content %}
+    {{ request.user.username }}
+    <a href="{% url 'authentication:group:group_list' request.user.pk %}" target="_blank" class="d-inline-block m-3">
+        <button type="button" class="btn btn-success d-inline-block">Groups</button>
+    </a>
+{% endblock %}
