@@ -6,9 +6,6 @@ from django.contrib.auth import login, logout
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from authentication.forms import Registration
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
 from authentication.forms import Registration, PartyRegistration
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -33,6 +30,9 @@ def login_user(request):
                 login(request, user)
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
+
+                if 'next' in request.GET:
+                    return redirect(request.GET.get('next'))
                 else:
                     return render(request, 'authentication/success.html')
             else:
@@ -112,7 +112,6 @@ def register_user(request):
             return HttpResponse('Please confirm your email address to complete the registration')
 
     return render(request, 'authentication/register.html', {'form': form})
-
 
 
 def register_party(request):
