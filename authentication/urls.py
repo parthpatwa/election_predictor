@@ -9,5 +9,7 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('register_user/', views.register_user, name='register_user'),
     path('register_party/', views.register_party, name='register_party'),
-    path('group/', include('group.urls'))
+    path('group/', include('group.urls')),
+    path('news/', include('news_items.urls')),
+
 ]

@@ -36,4 +36,3 @@ class Party(models.Model):
 
     def __str__(self):
         return self.party.user.username
-
