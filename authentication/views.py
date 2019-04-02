@@ -34,7 +34,7 @@ def login_user(request):
                 if 'next' in request.GET:
                     return redirect(request.GET.get('next'))
                 else:
-                    return render(request, 'authentication/success.html')
+                    return redirect('news_items:articles_list')
             else:
                 return HttpResponse('User does not exist')
 
