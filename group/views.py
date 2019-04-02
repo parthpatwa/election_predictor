@@ -27,7 +27,3 @@ def create_group(request, p_id=None):
                 return render(request, 'group/group_list.html', {'groups': groups})
         else:
             return render(request, 'group/create_group.html', {'form': form})
-
-
-
-    return None
