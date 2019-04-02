@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from authentication.models import Party
+from authentication.models import Party, Profile
 
 
 class Registration(forms.ModelForm):
@@ -20,6 +20,12 @@ class Registration(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError('Password mismatch')
         return confirm_password
+
+
+class CreateProfile(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'phone_num', 'location', 'gender']
 
 
 class PartyRegistration(forms.ModelForm):
