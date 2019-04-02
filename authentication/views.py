@@ -6,11 +6,11 @@ from django.contrib.auth import login, logout
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from authentication.forms import Registration, PartyRegistration
+from authentication.forms import Registration, PartyRegistration, CreateProfile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
-from authentication.models import Party, Usertype, Profile
+from authentication.models import Party, Usertype
 from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
 
@@ -83,9 +83,11 @@ def activate(request, uidb64, token):
 
 def register_user(request):
     form = Registration()
+    form_profile = CreateProfile()
     if request.method == 'POST':
         form = Registration(request.POST)
-        if form.is_valid():
+        form_profile = CreateProfile(request.POST)
+        if form.is_valid() and form_profile.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.is_active = False
@@ -93,7 +95,8 @@ def register_user(request):
 
             ut = Usertype.objects.create(user=user, is_user=True)
             ut.save()
-            profile = Profile.objects.create(profile=ut)
+            profile = form_profile.save(commit=False)
+            profile.profile = ut
             profile.save()
 
             current_site = get_current_site(request)
@@ -111,7 +114,7 @@ def register_user(request):
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
 
-    return render(request, 'authentication/register.html', {'form': form})
+    return render(request, 'authentication/register.html', {'form': form, 'form_profile': form_profile})
 
 
 def register_party(request):

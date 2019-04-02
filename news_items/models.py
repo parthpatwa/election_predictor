@@ -1,6 +1,5 @@
 from django.db import models
 from authentication.models import Usertype
-# Create your models here.
 
 
 class Query(models.Model):
