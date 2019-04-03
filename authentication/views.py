@@ -9,10 +9,12 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from authentication.forms import Registration, PartyRegistration, CreateProfile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from datetime  import datetime
 
 from authentication.models import Party, Usertype
 from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
+from django.db import connection
 
 
 def registration_all(request):
@@ -25,8 +27,11 @@ def login_user(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            ut = Usertype.objects.filter(user=user, is_user=True)
-            if ut.exists():
+            # ut = Usertype.objects.filter(user=user, is_user=True)
+            with connection.cursor() as cursor:
+                cursor.execute('select * from authentication_usertype where user_id = %s and is_user = %s', [user.pk, True])
+                ut = cursor.fetchall()
+            if len(ut) == 1:
                 login(request, user)
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
@@ -47,8 +52,11 @@ def login_party(request):
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            ut = Usertype.objects.filter(user=user, is_party=True)
-            if ut.exists():
+            # ut = Usertype.objects.filter(user=user, is_party=True)
+            with connection.cursor() as cursor:
+                cursor.execute('select * from authentication_usertype where user_id = %s and is_party = %s', [user.pk, True])
+                ut = cursor.fetchall()
+            if len(ut) == 1:
                 login(request, user)
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
@@ -93,11 +101,22 @@ def register_user(request):
             user.is_active = False
             user.save()
 
-            ut = Usertype.objects.create(user=user, is_user=True)
-            ut.save()
-            profile = form_profile.save(commit=False)
-            profile.profile = ut
-            profile.save()
+            # ut = Usertype.objects.create(user=user, is_user=True)
+            # ut.save()
+            with connection.cursor() as cursor:
+                cursor.execute('insert into authentication_usertype(user_id, is_user, is_party) values (%s,%s,%s)',
+                               [user.pk, True, False])
+
+            # profile = form_profile.save(commit=False)
+            # profile.profile = ut
+            # profile.save()
+            first_name = form_profile.cleaned_data['first_name']
+            last_name = form_profile.cleaned_data['last_name']
+            phone_num = form_profile.cleaned_data['phone_num']
+            location = form_profile.cleaned_data['location']
+            gender = form_profile.cleaned_data['gender']
+            with connection.cursor() as cursor:
+                cursor.execute('insert into authentication_profile(first_name, last_name, phone_num, location, gender, profile_id) values (%s,%s,%s, %s,%s,%s)', [first_name, last_name, phone_num, location, gender, user.pk])
 
             current_site = get_current_site(request)
             mail_subject = 'Activate your account.'
@@ -113,7 +132,6 @@ def register_user(request):
             )
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
-
     return render(request, 'authentication/register.html', {'form': form, 'form_profile': form_profile})
 
 
@@ -130,10 +148,15 @@ def register_party(request):
             user.set_password(form_basic.cleaned_data['password'])
             user.save()
 
-            ut = Usertype.objects.create(user=user, is_party=True)
-            ut.save()
-            party = Party.objects.create(party=ut, description=description, name=name)
-            party.save()
+            # ut = Usertype.objects.create(user=user, is_party=True)
+            # ut.save()
+            with connection.cursor() as cursor:
+                cursor.execute('insert into authentication_usertype(user_id, is_user, is_party) values (%s,%s,%s)', [user.pk, False, True])
+            # party = Party.objects.create(party=ut, description=description, name=name)
+            # party.save()
+            with connection.cursor() as cursor:
+                cursor.execute('insert into authentication_party(name, description, created_at, credit_amount,party_id) values (%s,%s,%s,%s,%s)', [name, description, datetime.now(), 0, user.pk])
+
 
             return HttpResponse('Party successfully created.')
 

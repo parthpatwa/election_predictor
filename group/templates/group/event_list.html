@@ -1,0 +1,16 @@
+{% extends 'authentication/base.html' %}
+{% block content %}
+    <a href="{% url  'authentication:group:create_event' g_id %}" target="_blank" class="d-inline-block m-3">
+        <button type="button" class="btn btn-success d-inline-block">Create Event</button>
+    </a><br>
+    {% if event %}
+        {% for events in event %}
+            <strong>EVENT:</strong><br>
+            Name: {{ events.1 }}<br>
+            Description: {{ events.2 }}<br>
+            Location: {{ events.3 }}<br>
+            Date: {{ events.4 }}<br>
+            Day: {{ events.5 }}<br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
