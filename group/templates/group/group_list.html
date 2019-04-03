@@ -5,8 +5,9 @@
     </a><br>
     {% if groups %}
         {% for group in groups %}
-            Name: {{ group.name }}<br>
-            Description: {{ group.description }}<br>
+            <strong>GROUP:</strong><br>
+            Name: <a href="{% url 'authentication:group:event_list' group.0 %}">{{ group.1 }}</a><br>
+            Description: {{ group.2 }}<br>
         {% endfor %}
     {% endif %}
 {% endblock %}
