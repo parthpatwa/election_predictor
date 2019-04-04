@@ -35,7 +35,6 @@ def login_user(request):
                 login(request, user)
                 if 'next' in request.POST:
                     return redirect(request.POST.get('next'))
-
                 if 'next' in request.GET:
                     return redirect(request.GET.get('next'))
                 else:
