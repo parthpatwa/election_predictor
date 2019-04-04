@@ -22,7 +22,7 @@ def articles_list(request):
         with connection.cursor() as cursor:
             cursor.execute(que)
             articles = cursor.fetchall()
-        rows = [ut[x:x+1] for x in range(0, len(articles), 1)]
+        rows = [articles[x:x+1] for x in range(0, len(articles), 1)]
 
         return render(request, 'news_items/articles_list.html', {'rows': rows})
     else:
@@ -36,21 +36,34 @@ def feeds_list(request):#1
 
 @login_required
 def new_feed(request):
+    file = open('queries.txt','a')
     if request.method == "POST":
         form = FeedForm(request.POST)
-        k = Feed.objects.filter(query__query=form.data['query'])
-        k.delete()#2
-        l = Query.objects.filter(query=form.data['query'])
-        l.delete()#2
+        qur = form.data['query']
+        k = Feed.objects.filter(query__query=qur)
+        #k = "DELETE FROM news_items_feed WHERE news_items_feed.query_id = '"+ qur+"';"
+        #file.write('k__'+str(k.query)+'\n')
+        #with connection.cursor() as cursor:
+        #    cursor.execute(k)
+        #k.delete()#2
+        l = Query.objects.filter(query=qur)
+        #l = "DELETE FROM news_items_feed WHERE news_items_feed.query_id = '"+ qur+"';"
+        #with connection.cursor() as cursor:
+        #    cursor.execute(l)
+        #file.write('l__'+str(l.query)+'\n')
+        l.delete()#3
 
         if form.is_valid():
+            file = open('queries.txt','a')
             feed = form.save(commit=False)
             q = feed.query
             url = "https://news.google.com/rss/search?cf=all&pz=1&q="+q+"&hl=en-US&gl=US&ceid=US:en"
             existingFeed = Feed.objects.filter(url=url)#4
+            file.write('\nexistingFeed_'+str(existingFeed)+'\n')
             que = Query()
             que.query = feed.query
             que.query_fk = Usertype.objects.get(user=request.user)#5
+            #file.write('\nque.query_fk_'+str(l.query)+'\n')
             feed = Feed()
             feed.url = url
             if len(existingFeed) == 0:
@@ -76,7 +89,13 @@ def new_feed(request):
                     article.feed = feed
                     article.save()
             articles = Article.objects.filter(feed__url=url)#6
+            #articles = "SELECT news_items_article.id, news_items_article.feed_id, news_items_article.title, news_items_article.url, news_items_article.description, news_items_article.publication_date FROM news_items_article INNER JOIN news_items_feed ON (news_items_article.feed_id = news_items_feed.id) WHERE news_items_feed.url ='"+url+"';"
+            #file.write('\narticles_'+str(articles.query)+'\n')
+            #with connection.cursor() as cursor:
+            #    cursor.execute(articles)
+            #    articles = cursor.fetchall()
             rows = [articles[x:x + 1] for x in range(0, len(articles), 1)]
+            file.write(rows)
             return render(request, 'news_items/search_results.html', {'rows': rows})
     else:
         form = FeedForm()
@@ -85,15 +104,34 @@ def new_feed(request):
 
 @login_required
 def saved_queries(request):
+    file = open('queries.txt','a')
     if request.method == "POST":
         query = request.POST.get('delete')
         if query:
             f = Article.objects.filter(feed__query__query=query)
-            f.delete()#7
-            a = Feed.objects.filter(query__query=query)
-            a.delete()#8
-            r = Query.objects.filter(query=query)
-            r.delete()#9
-
-    savedqps = Query.objects.filter(query_fk__user=request.user)#10
+            #file.write('Articles_'+str(f.query)+'\n')
+            del_art = "DELETE nia FROM news_items_article nia INNER JOIN news_items_feed ON (nia.feed_id = news_items_feed.id) WHERE news_items_feed.query_id = '"+query+"';"
+            with connection.cursor() as cursor:
+                cursor.execute(del_art)
+            #f.delete()#7
+            del_feed = "DELETE FROM news_items_feed WHERE query_id = '"+query+"';"
+            with connection.cursor() as cursor:
+                cursor.execute(del_feed)
+            #a = Feed.objects.filter(query__query=query)
+            #file.write('Feed_'+str(a.query)+'\n')
+            #a.delete()#8
+            qur = "DELETE FROM news_items_query WHERE query = '" +query+ "';"
+            with connection.cursor() as cursor:
+                cursor.execute(qur)
+            #r = Query.objects.filter(query=query)
+            #file.write('query_'+str(r.query)+'\n')
+            #r.delete()#9
+    #savedqps = Query.objects.filter(query_fk__user=request.user)#10
+    #file.write('saved_'+str(savedqps.query)+'\n')
+    svdqps = "SELECT news_items_query.query, news_items_query.query_fk_id FROM news_items_query WHERE news_items_query.query_fk_id ="+str(request.user.id)+";"
+    with connection.cursor() as cursor:
+        cursor.execute(svdqps)
+        savedqps = cursor.fetchall()
+        #file.write(str(savedqps))
+    file.close()
     return render(request, 'news_items/queries_saved.html', {'savedqps': savedqps})
