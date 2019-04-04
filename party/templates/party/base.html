@@ -44,7 +44,55 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/main.css' %}">
-<!--===============================================================================================-->
+
+    <!--===============================================================================================--><style>
+    .container1 {
+    position: relative;
+    width: 100%;
+  }
+
+  .image {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 20px;
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%)
+  }
+
+  .container1:hover .image {
+    opacity: 1;
+  }
+
+  .container1:hover .middle {
+    opacity: 1;
+  }
+
+  .text {
+    color: white;
+    font-size: 30px;
+  }
+  </style>
+
 </head>
 
 <body>
@@ -67,12 +115,12 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 		<!-- Links -->
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="{% url 'authentication:news_items:articles_list' %}" style="color:white;padding-left:50px;">News Feed
+				<a class="nav-link" href="#" style="color:white;padding-left:50px;">Home
 					<span class="sr-only">(current)</span>
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#" style="color:white;padding-left:25px">Nearby Events</a>
+				<a class="nav-link" href="{% url 'authentication:group:group_list' request.user.pk %}" style="color:white;padding-left:25px">Groups</a>
 			</li>
 		</ul>
 
@@ -83,19 +131,18 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 			</div>
 		</form>
 
-		<div class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false" style="padding-left:30px;padding-right:20px">Sign Up</a>
-			<div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" href="{% url 'authentication:register_user' %}" style="font-size:15px;">Citizen</a>
-				<a class="dropdown-item" href="{% url 'authentication:register_party' %}" style="font-size:15px;">Party member</a>
-			</div>
-		</div>
+    <li class="nav-item">
+      <span class="nav-link" style="color:white;padding-left:25px;font-size:15px;">{{ request.user.username }}</span>
+    </li>
 
-		<ul><li class="nav-item">
-      <a class="nav-link" href="{% url 'authentication:login_user' %}" style="color:white;padding-left:25px;padding-right:50px">Login</a>
-    </li></ul>
-
+    <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false" style="padding-left:30px;padding-right: 50px; font-size:15px;">Profile</a>
+      <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" href="#" style="font-size:15px;">Edit Profile</a>
+        <a class="dropdown-item" href="{% url 'authentication:logout' %}" style="font-size:15px;">Log Out</a>
+      </div>
+    </div>
 	</div>
 </nav>
 
