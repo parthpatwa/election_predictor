@@ -29,8 +29,13 @@ def articles_list(request):
         return render(request, 'news_items/articles_list.html', {'rows': None})
 
 @login_required
-def feeds_list(request):#1
-    feeds = Feed.objects.filter(query__query_fk__user=request.user)
+def feeds_list(request):  # 1
+    # feeds = Feed.objects.filter(query__query_fk__user=request.user)
+    with connection.cursor() as cursor:
+        cursor.execute(
+            'select * from news_items_feed where query_id = (select query_id from news_items_query where query_fk_id = %s)',
+            [request.user.pk])
+        feeds = cursor.fetchall()
     return render(request, 'news_items/feeds_list.html', {'feeds': feeds})
 
 
