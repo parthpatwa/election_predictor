@@ -165,7 +165,7 @@ iframe {
 }
 
 .hov1:hover {
-  color: #c87ef0;
+  color: #3c96ff;
 }
 
 
@@ -187,15 +187,26 @@ iframe {
   flex-wrap: wrap;
   align-items: stretch;
   flex-wrap: wrap;
-  padding-left: calc(70%/2);
-  padding-right: calc(70%/2);
+  padding-left : calc(70%/2.1);
+  padding-right : calc(70%/2.1);
 }
 
 .wrap-login100 {
   width: 520px;
-  min-height: 80vh;
+  min-height: 50vh;
   background: #fff;
-  border-radius: 15px;
+  border-radius: 5px;
+  border-left: 3px solid #2dfbff;
+  border-right: 3px solid #3c96ff;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 3px;
+  -moz-background-size: 100% 3px;
+  background-size: 100% 3px;
+  background-image: -webkit-linear-gradient(left, #2dfbff 0%, #3c96ff 100%), -webkit-linear-gradient(left, #2dfbff 0%, #3c96ff 100%);
   position: relative;
 }
 
@@ -307,13 +318,9 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  background: #d5007d;
-  background: -webkit-linear-gradient(45deg, #d5007d, #e53935);
-  background: -o-linear-gradient(45deg, #d5007d, #e53935);
-  background: -moz-linear-gradient(45deg, #d5007d, #e53935);
-  background: linear-gradient(45deg, #d5007d, #e53935);
+  background: #3c96ff;
+  background: -webkit-linear-gradient(45deg, #3c96ff, #2dfbff);
 }
-
 
 .input100:focus + .focus-input100::before {
   width: 100%;
@@ -409,11 +416,8 @@ iframe {
   z-index: -1;
   width: 100%;
   height: 300%;
-  background: #e8519e;
-  background: -webkit-linear-gradient(top, #e8519e, #c77ff2, #e8519e, #c77ff2);
-  background: -o-linear-gradient(top, #e8519e, #c77ff2, #e8519e, #c77ff2);
-  background: -moz-linear-gradient(top, #e8519e, #c77ff2, #e8519e, #c77ff2);
-  background: linear-gradient(top, #e8519e, #c77ff2, #e8519e, #c77ff2);
+  background: #2bfbff;
+  background: -webkit-linear-gradient(top, #2bfbff, #3c96ff, #2bfbff, #3c96ff);
   bottom: -100%;
   left: 0;
 
@@ -483,6 +487,8 @@ iframe {
     background-color: #1da0f2;
     color: #FFF;
     border-color: #1da0f2; }
+
+
 
 
 /*//////////////////////////////////////////////////////////////////

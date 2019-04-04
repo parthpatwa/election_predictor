@@ -65,7 +65,7 @@ def new_feed(request):
             q = feed.query
             url = "https://news.google.com/rss/search?cf=all&pz=1&q=" + q + "&hl=en-US&gl=US&ceid=US:en"
             existingFeed = Feed.objects.filter(url=url)  # 4
-            file.write('\nexistingFeed_' + str(existingFeed) + '\n')
+            # file.write('\nexistingFeed_' + str(existingFeed) + '\n')
             que = Query()
             que.query = feed.query
             que.query_fk = Usertype.objects.get(user=request.user)  # 5
@@ -101,7 +101,7 @@ def new_feed(request):
             #    cursor.execute(articles)
             #    articles = cursor.fetchall()
             rows = [articles[x:x + 1] for x in range(0, len(articles), 1)]
-            file.write(rows)
+            # file.write(rows)
             return render(request, 'news_items/search_results.html', {'rows': rows})
     else:
         form = FeedForm()

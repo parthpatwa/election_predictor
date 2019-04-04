@@ -5,10 +5,8 @@ from authentication.models import Party, Profile
 
 
 class Registration(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Enter Password Here ...'}))
-    confirm_password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'placeholder': 'Confirm Password ...'}))
+    password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
@@ -31,4 +29,4 @@ class CreateProfile(forms.ModelForm):
 class PartyRegistration(forms.ModelForm):
     class Meta:
         model = Party
-        fields = ['description', 'name']
+        fields = ['name', 'description']
