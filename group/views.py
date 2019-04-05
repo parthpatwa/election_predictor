@@ -4,16 +4,17 @@ from group.forms import groupRegistration, eventRegistration
 from django.db import connection
 
 
-# Create your views here.
 def groups_list(request, p_id=None):
     if p_id:
         with connection.cursor() as cursor:
-            cursor.execute('select * from group_group where admin_id_id = (select id from authentication_party where party_id = %s)',[p_id])
+            cursor.execute(
+                'select * from group_group where admin_id_id = (select id from authentication_party where party_id = %s)',
+                [p_id])
             groups = cursor.fetchall()
 
             return render(request, 'group/group_list.html', {'groups': groups})
     else:
-        return redirect('authentication:login_party')
+        return redirect('authentication:login_user')
 
 
 def create_group(request, p_id=None):
@@ -26,11 +27,13 @@ def create_group(request, p_id=None):
                 description = form.cleaned_data['description']
 
                 with connection.cursor() as cursor:
-                    cursor.execute('select authentication_party.id from authentication_party where party_id = %s', [p_id])
+                    cursor.execute('select authentication_party.id from authentication_party where party_id = %s',
+                                   [p_id])
                     admin_id = cursor.fetchone()[0]
 
                 with connection.cursor() as cursor:
-                    cursor.execute('insert into group_group(name, description, admin_id_id) values (%s,%s,%s)', [name, description,     admin_id])
+                    cursor.execute('insert into group_group(name, description, admin_id_id) values (%s,%s,%s)',
+                                   [name, description, admin_id])
 
                 with connection.cursor() as cursor:
                     cursor.execute(
@@ -44,7 +47,7 @@ def create_group(request, p_id=None):
 
 def event_list(request, g_id=None):
     if g_id:
-        #event = Event.objects.filter(group_id_id=g_id)
+        # event = Event.objects.filter(group_id_id=g_id)
         with connection.cursor() as cursor:
             cursor.execute('select * from group_event where group_id_id = %s', [g_id])
             event = cursor.fetchall()
@@ -72,7 +75,9 @@ def create_event(request, g_id=None):
                 #                      date=date, day=day, location=location,
                 #                      group_id=group_id)
                 with connection.cursor() as cursor:
-                    cursor.execute('insert into group_event(name, description, location, date, day, group_id_id) values (%s, %s, %s, %s, %s, 0%s)', [name, description, location, date, day, g_id])
+                    cursor.execute(
+                        'insert into group_event(name, description, location, date, day, group_id_id) values (%s, %s, %s, %s, %s, 0%s)',
+                        [name, description, location, date, day, g_id])
                 with connection.cursor() as cursor:
                     cursor.execute('select * from group_event where group_id_id = %s', [g_id])
                     event = cursor.fetchall()
