@@ -30,7 +30,7 @@ class Profile(models.Model):
 class Party(models.Model):
     party = models.ForeignKey(Usertype, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    description = models.TextField(max_length=500, null=True)
+    description = models.TextField(max_length=5000, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     credit_amount = models.IntegerField(default=0)
 

@@ -1,13 +1,72 @@
-{% extends 'authentication/base.html' %}
+{% extends 'party/base.html' %}
+{% load static %}
 {% block content %}
-    <a href="{% url  'authentication:group:create_group' request.user.pk %}" target="_blank" class="d-inline-block m-3">
-        <button type="button" class="btn btn-success d-inline-block">Create Group</button>
-    </a><br>
+<div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %});">
+    <span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff);
+						-webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:35px;">
+                    Groups
+                </span>
     {% if groups %}
         {% for group in groups %}
-            <strong>GROUP:</strong><br>
-            Name: <a href="{% url 'authentication:group:event_list' group.0 %}">{{ group.1 }}</a><br>
-            Description: {{ group.2 }}<br>
+            <div class="container">
+               <div class="card" style="max-width:1200px">
+                  <div class="card-body" style="padding: 30px">
+                    <h1 class="card-title" style="font-weight: bold">{{ group.1 }}</h1>
+                    <p class="card-text" style="font-size: 16px;" >{{ group.2 }}</p>
+                    <p>Date:</p>
+                    <span style="font-size: 12px">Group Members: </span>
+
+                      <div class="chip" style="margin: 2px">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+
+
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+                      <div class="chip" style="margin: 2px;">
+                          <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                          <span>Jitesh Malipeddi</span>
+                      </div>
+
+                      <br><br>
+                    <a href="#" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Visit Group</a>
+                  </div>
+               </div>
+            </div>
+            <br><br>
         {% endfor %}
     {% endif %}
+
+    <br><br><br>
+    <div id="mybutton">
+      <a href="{% url  'authentication:group:create_group' request.user.pk %}"><abbr title="Click to add a new Group"><button class="feedback"><img src="https://img.icons8.com/nolan/64/000000/plus-math.png" style="width:35px;height: auto"></button></abbr></a>
+    </div>
+</div>
 {% endblock %}
