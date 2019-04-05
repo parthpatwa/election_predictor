@@ -1,0 +1,13 @@
+{% extends 'authentication/base.html' %}
+{% block content %}
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <a href="{% url 'authentication:group:add_group_members' g_id %}" target="_blank" class="d-inline-block m-3">
+        <button type="button" class="btn btn-success d-inline-block">Add Member</button>
+    </a><br>
+    {% if members %}
+        <strong>Members:</strong><br>
+        {% for member in members %}
+            Name: {{ member.first_name}}&nbsp;{{ member.last_name }}<br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
