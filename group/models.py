@@ -1,5 +1,5 @@
 from django.db import models
-from authentication.models import Party
+from authentication.models import Party, Profile
 
 
 class Group(models.Model):
@@ -12,6 +12,12 @@ class Group(models.Model):
 
     class Meta:
         unique_together = ('name', 'admin_id')
+
+
+class Group_members(models.Model):
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
 
 
 days_choices = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'),
