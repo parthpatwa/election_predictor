@@ -19,8 +19,8 @@
         <form method="POST" action="{% url 'authentication:news_items:saved_queries' %}">
             {% csrf_token %}
 
-    <h2>{{row.query}}</h2>
-      <button class="btn btn-primary" name="delete" type="submit" value="{{ row.query }}">
+    <h2>{{row.0}}</h2>
+      <button class="btn btn-primary" name="delete" type="submit" value="{{ row.0 }}">
           Delete
       </button>
         </form>

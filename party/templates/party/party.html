@@ -1,7 +1,17 @@
-{% extends 'authentication/base.html' %}
+{% extends 'party/base.html' %}
 {% block content %}
-    {{ request.user.username }}
-    <a href="{% url 'authentication:group:group_list' request.user.pk %}" target="_blank" class="d-inline-block m-3">
-        <button type="button" class="btn btn-success d-inline-block">Groups</button>
-    </a>
+
+      <div class="container1" style="margin:120px 0px 40px 0px">
+    <img src="#" alt="BJP" class="image center">
+  </div>
+
+
+  <div class="">
+    <center><p style="font-size:40px; color:black">Bharatiya Janatha Party</p></center>
+  </div>
+
+  <div class="" style="margin: 20px 100px 50px 100px">
+    <center><p>description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description </p></center>
+  </div>
+
 {% endblock %}
