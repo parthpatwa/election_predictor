@@ -6,11 +6,12 @@ from django.contrib.auth import login, logout
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from authentication.forms import Registration, PartyRegistration, CreateProfile
+from authentication.forms import Registration, PartyRegistration, CreateProfile, UpdateProfile
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
+from authentication.models import Profile, Party
 from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.db import connection
@@ -43,9 +44,52 @@ def login_user(request):
 
 
 @login_required
+def edit_profile(request):
+    user = request.user
+    if user.usertype.is_party:
+        party = Party.objects.get(party__user__username=user)
+        if request.method == 'POST':
+            form = UpdateProfile(request.POST, instance=user)
+            form_party_details = PartyRegistration(request.POST, instance=party)
+            if form.is_valid() and form_party_details.is_valid():
+                user = form.save(commit=False)
+                user.save()
+                party.name = form_party_details.cleaned_data['name']
+                party.description = form_party_details.cleaned_data['description']
+                party.save()
+                return render(request, 'party/party.html')
+
+        else:
+            form = UpdateProfile(instance=user)
+            form_party_details = PartyRegistration(instance=party)
+            return render(request, 'party/update_profile.html', {'form': form, 'form_party': form_party_details})
+
+    elif user.usertype.is_user:
+        profile = Profile.objects.get(profile__user__username=user)
+        if request.method == 'POST':
+            form = UpdateProfile(request.POST, instance=user)
+            user_details = CreateProfile(request.POST, instance=profile)
+            if form.is_valid() and user_details.is_valid():
+                user = form.save(commit=False)
+                user.save()
+                profile.first_name = user_details.cleaned_data['first_name']
+                profile.last_name = user_details.cleaned_data['last_name']
+                profile.location = user_details.cleaned_data['location']
+                profile.phone_num = user_details.cleaned_data['phone_num']
+                profile.gender = user_details.cleaned_data['gender']
+
+                profile.save()
+                return redirect('news_items:articles_list')
+
+        else:
+            form = UpdateProfile(instance=user)
+            user_details = CreateProfile(instance=profile)
+            return render(request, 'party/update_profile.html', {'form': form, 'user_form': user_details})
+
+
+@login_required
 def logout_user(request):
-    logout(request)
-    return render(request, 'authentication/logout.html')
+    return redirect('registration')
 
 
 def activate(request, uidb64, token):
