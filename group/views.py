@@ -1,6 +1,8 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from group.forms import groupRegistration, eventRegistration
-
+from .models import Group_members, Group
+from authentication.models import Profile
 from django.db import connection
 
 
@@ -84,3 +86,25 @@ def create_event(request, g_id=None):
                 return render(request, 'group/event_list.html', {'event': event, 'g_id': g_id})
         else:
             return render(request, 'group/create_event.html', {'form': form, })
+
+
+def members_list(request, g_id=None):
+    if g_id:
+        group_members = Group_members.objects.filter(group_id_id=g_id, status=True)
+        user_id = []
+        for i in group_members:
+            user_id.append(i.user_id_id)
+        members = Profile.objects.filter(pk__in=user_id)
+        return render(request, 'group/member_list.html', {'members': members, 'g_id': g_id})
+
+
+def add_group_members(request, g_id=None):
+    if g_id:
+        group_members = Group_members.objects.filter(group_id_id=g_id)
+        user_id = []
+        for i in group_members:
+            user_id.append(i.user_id_id)
+        print(user_id)
+        party = Group.objects.get(pk=g_id).admin_id
+        members = Profile.objects.exclude(pk__in=user_id).filter(party_id=party)
+        return render(request, 'group/add_group_members.html', {'members': members})
