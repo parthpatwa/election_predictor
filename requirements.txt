@@ -6,3 +6,5 @@ django-widget-tweaks==1.4.3
 feedparser==5.2.1
 mysqlclient==1.4.2.post1
 pytz==2018.9
+six==1.12.0
+sqlparse==0.3.0
