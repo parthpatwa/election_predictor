@@ -84,7 +84,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'election_predictordb',
         'USER': 'root',
+<<<<<<< HEAD
         'PASSWORD': 'snowysatish1248',
+=======
+        'PASSWORD': 'mysqlroot',
+>>>>>>> 16524e318d481b94975ef6d59cc4133a79d48ea8
         'HOST': 'localhost',
         'PORT': '',
     }

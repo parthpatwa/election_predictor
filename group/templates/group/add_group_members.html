@@ -1,0 +1,13 @@
+{% extends 'authentication/base.html' %}
+{% block content %}
+{% load static %}
+{% load bootstrap %}
+{% load widget_tweaks %}
+    <br><br><br><br><br><br><br>
+    {% if members %}
+        Add Members:
+        {% for member in members %}
+            {{ member.first_name }}&nbsp;{{ member.last_name }}<br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -14,6 +14,17 @@ class Usertype(models.Model):
         return self.user.username
 
 
+class Party(models.Model):
+    party = models.ForeignKey(Usertype, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=500, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    credit_amount = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.party.user.username
+
+
 class Profile(models.Model):
     profile = models.ForeignKey(Usertype, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, null=True)
@@ -22,17 +33,7 @@ class Profile(models.Model):
     phone_num = models.IntegerField(null=True, validators=[MaxValueValidator(9999999999)])
     location = models.CharField(max_length=100, null=True)
     gender = models.CharField(max_length=20, choices=gender_choices, null=True)
+    party_id = models.ForeignKey(Party, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.profile.user.username
-
-
-class Party(models.Model):
-    party = models.ForeignKey(Usertype, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    description = models.TextField(max_length=5000, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    credit_amount = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.party.user.username

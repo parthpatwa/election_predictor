@@ -30,3 +30,9 @@ class PartyRegistration(forms.ModelForm):
     class Meta:
         model = Party
         fields = ['name', 'description']
+
+
+class UpdateProfile(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']
