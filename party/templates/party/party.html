@@ -1,8 +1,9 @@
 {% extends 'party/base.html' %}
+{% load static %}
 {% block content %}
-
-      <div class="container1" style="margin:120px 0px 40px 0px">
-    <img src="#" alt="BJP" class="image center">
+<div style="background-image: url({% static 'authentication/images/blog-page-background.jpg' %});">
+      <div class="container1" style="margin:120px 0px 40px 0px; ">
+    <img src="{% static 'authentication/images/party-pic.jpg' %}" alt="BJP" class="image center">
   </div>
 
 
@@ -13,5 +14,5 @@
   <div class="" style="margin: 20px 100px 50px 100px">
     <center><p>description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description </p></center>
   </div>
-
+</div>
 {% endblock %}
