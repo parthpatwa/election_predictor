@@ -1,8 +1,11 @@
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from group.forms import groupRegistration, eventRegistration
 from .models import Group_members, Group
-from authentication.models import Profile, Usertype
+from authentication.models import Profile, Usertype, Party
 from django.db import connection
 
 
@@ -19,6 +22,7 @@ def groups_list(request, p_id=None):
         return redirect('authentication:login_user')
 
 
+@login_required
 def create_group(request, p_id=None):
     if p_id:
         form = groupRegistration()
@@ -45,6 +49,23 @@ def create_group(request, p_id=None):
                 return render(request, 'group/group_list.html', {'groups': groups})
         else:
             return render(request, 'group/create_group.html', {'form': form})
+
+
+@login_required
+def update_group(request, g_id=None):
+    if g_id:
+        group = Group.objects.get(pk=g_id)
+        if request.method == 'POST':
+            group_details = groupRegistration(request.POST, instance=group)
+            if group_details.is_valid():
+                group.name = group_details.cleaned_data['name']
+                group.description = group_details.cleaned_data['description']
+                group.save()
+                party = Party.objects.get(pk=group.admin_id_id)
+                return HttpResponseRedirect(reverse('authentication:group:group_list', args=(party.party_id,)))
+        else:
+            group_details = groupRegistration(instance=group)
+            return render(request, 'group/edit_group.html', {'form': group_details})
 
 
 def event_list(request, g_id=None):
@@ -114,7 +135,7 @@ def add_group_members(request, g_id=None):
 def request_member(request, g_id=None, u_id=None):
     if g_id and u_id:
         Group_members.objects.create(user_id_id=u_id, group_id_id=g_id)
-    return add_group_members(request, g_id)
+    return HttpResponseRedirect(reverse('authentication:group:add_group_members', args=(g_id,)))
 
 
 def requested_members(request, g_id=None):
@@ -131,7 +152,7 @@ def delete_request(request, g_id=None, u_id=None):
     if g_id and u_id:
         instance = Group_members.objects.get(user_id_id=u_id, group_id_id=g_id)
         instance.delete()
-    return requested_members(request, g_id)
+    return HttpResponseRedirect(reverse('authentication:group:requested_members', args=(g_id,)))
 
 
 def user_groups(request, u_id=None):
@@ -141,11 +162,13 @@ def user_groups(request, u_id=None):
         group_id = []
         for i in group_members:
             group_id.append(i.group_id_id)
-        with connection.cursor() as cursor:
-            cursor.execute(
-                'SELECT * FROM group_group WHERE group_group.id IN %s',
-                [group_id])
-            groups = cursor.fetchall()
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    'SELECT * FROM group_group WHERE group_group.id IN %s', [group_id])
+                groups = cursor.fetchall()
+        except:
+            groups = ()
         return render(request, 'group/user_group_list.html', {'groups': groups, 'u_id': u_id})
 
 
@@ -165,11 +188,11 @@ def user_accept(request, g_id=None, u_id=None):
         instance = Group_members.objects.get(user_id_id=u_id, group_id_id=g_id)
         instance.status = True
         instance.save()
-    return user_requested(request, request.user.pk)
+    return HttpResponseRedirect(reverse('authentication:group:user_requested', args=(request.user.pk,)))
 
 
 def user_decline(request, g_id=None, u_id=None):
     if g_id and u_id:
         instance = Group_members.objects.get(user_id_id=u_id, group_id_id=g_id)
         instance.delete()
-    return user_requested(request, request.user.pk)
+    return HttpResponseRedirect(reverse('authentication:group:user_requested', args=(request.user.pk,)))
