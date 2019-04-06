@@ -5,12 +5,11 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
   <div class="container">
-    <h1>Django News</h1>
-    <p>Have a look around to see some of the latest and greatest news articles from your favorite feeds.</p>
+    <h1>National News</h1>
   </div>
 </div>
 
-<div class="container">
+    <div class="container">
   {% for row in rows %}
   <div class="col-md-6">
     {% for entry in row %}
@@ -20,10 +19,11 @@
     {% endfor %}
   </div>
   {% endfor %}
-</div> <!-- /container -->
+</div>
     <div class="container">
   <footer>
     <p>&copy; Django News Aggregator</p>
   </footer>
-    </div>
+</div> <!-- /container -->
+
 {% endblock %}
