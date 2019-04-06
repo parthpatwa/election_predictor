@@ -4,10 +4,10 @@
 {% load bootstrap %}
 {% load widget_tweaks %}
     <br><br><br><br><br><br><br>
+    Add Members:
     {% if members %}
-        Add Members:
         {% for member in members %}
-            {{ member.first_name }}&nbsp;{{ member.last_name }}<br>
+            {{ member.first_name }}&nbsp;{{ member.last_name }}<a href="{% url 'authentication:group:request_member' g_id member.pk %}"><input type="button" class="btn-primary" value="Invite"></a><br>
         {% endfor %}
     {% endif %}
 {% endblock %}

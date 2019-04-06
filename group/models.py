@@ -19,6 +19,9 @@ class Group_members(models.Model):
     user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = ('group_id', 'user_id')
+
 
 days_choices = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'),
                 ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'),
