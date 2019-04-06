@@ -14,7 +14,7 @@ class Group(models.Model):
         unique_together = ('name', 'admin_id')
 
 
-class Group_members(models.Model):
+class GroupMembers(models.Model):
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
     user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
@@ -23,17 +23,11 @@ class Group_members(models.Model):
         unique_together = ('group_id', 'user_id')
 
 
-days_choices = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'),
-                ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'),
-                ('Friday', 'Friday'), ('Saturday', 'Saturday'), ('Sunday', 'Sunday')]
-
-
 class Event(models.Model):
     name = models.CharField(max_length=25, null=False)
     description = models.TextField(max_length=200)
     location = models.CharField(max_length=100)
     date = models.DateField()
-    day = models.CharField(max_length=15, choices=days_choices)
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
     def __str__(self):

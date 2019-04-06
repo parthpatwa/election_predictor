@@ -28,6 +28,9 @@
           <p style="color: red">{{ error }}</p>
         {% endfor %}
         {% endfor %}
+        {% if error %}
+            <p style="color: red">{{ error }}</p>
+        {% endif %}
         <div class="container-login100-form-btn p-t-20">
             <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
