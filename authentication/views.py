@@ -21,6 +21,27 @@ def registration_all(request):
     return render(request, 'authentication/registration_all.html')
 
 
+@login_required
+def list_parties(request):
+    user = request.user
+    user_profile = Profile.objects.get(profile__user__username=user)
+    p_id = user_profile.party_id_id
+    if p_id:
+        parties = Party.objects.exclude(pk=p_id)
+    else:
+        parties = Party.objects.all()
+    return render(request, 'authentication/assign_party.html', {'parties': parties})
+
+
+def choose_party(request, p_id=None):
+    if p_id:
+        user = request.user
+        user_profile = Profile.objects.get(profile__user__username=user)
+        user_profile.party_id_id = p_id
+        user_profile.save()
+        return redirect('news_items:articles_list')
+
+
 def login_user(request):
     form = AuthenticationForm()
     if request.method == 'POST':
@@ -89,6 +110,7 @@ def edit_profile(request):
 
 @login_required
 def logout_user(request):
+    logout(request)
     return redirect('registration')
 
 
@@ -180,7 +202,7 @@ def register_party(request):
                     'insert into authentication_party(name, description, created_at, credit_amount,party_id) values (%s,%s,%s,%s,%s)',
                     [name, description, datetime.now(), 0, user.pk])
 
-            return HttpResponse('Party successfully created.')
+            return render(request, 'party/party.html')
 
     return render(request, 'authentication/register.html',
                   {'form': form_basic, 'form_party': form_party})

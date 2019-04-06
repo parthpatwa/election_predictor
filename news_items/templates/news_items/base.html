@@ -40,6 +40,7 @@
                             </button>
               </a>
               </li>
+              <li><a href="{% url 'authentication:list_parties' %}">Change Party</a></li>
               <li><a href="{% url 'authentication:group:user_groups' request.user.pk %}">My Groups</a></li>
               <li><a href="{% url 'authentication:logout' %}">Logout</a></li>
               <li><a href="{% url 'authentication:edit_profile' %}">Edit Profile</a></li>
