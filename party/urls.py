@@ -1,6 +1,6 @@
 from django.urls import path, include
-
+from . import views
 app_name = 'party'
 urlpatterns = [
-    path('group/', include('group.urls'))
+    path('', views.party,name='party')
 ]

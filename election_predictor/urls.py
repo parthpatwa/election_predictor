@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
     path('news/', include('news_items.urls')),
-    path('', views.registration_all, name='registration'),
+    path('', views.login_user, name='login'),
     re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate,
             name='activate'),
     path('password_reset/', auth_views.PasswordResetView.as_view(template_name='registration/reset_password.html'), name='forgot_pass'),

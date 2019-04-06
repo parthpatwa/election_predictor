@@ -95,9 +95,9 @@
     .chip {
       display: inline-block;
       padding: 0 25px;
-      height: 30px;
-      font-size: 13px;
-      line-height: 30px;
+      height: 50px;
+      font-size: 16px;
+      line-height: 50px;
       border-radius: 25px;
       background-color: #f1f1f1;
     }
@@ -105,8 +105,8 @@
     .chip img {
       float: left;
       margin: 0 10px 0 -25px;
-      height: 30px;
-      width: 30px;
+      height: 50px;
+      width: 50px;
       border-radius: 50%;
     }
 
@@ -127,7 +127,7 @@
 
 </head>
 
-<body>
+<body background="{% static 'authentication/images/middle-cover.jpg' %}">
 
 <nav class="navbar fixed-top navbar-expand-lg py-1 mb-md-0 mb-4 z-depth-1" style="background: -webkit-linear-gradient(left, #3c96ff 0%, #2dfbff 100%) !important;
 background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; color:white;">
@@ -147,7 +147,7 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 		<!-- Links -->
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="#" style="color:white;padding-left:50px;">Home
+				<a class="nav-link" href="{% url 'authentication:party:party' %}" style="color:white;padding-left:50px;">Home
 					<span class="sr-only">(current)</span>
 				</a>
 			</li>
@@ -156,15 +156,9 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 			</li>
 		</ul>
 
-
-		<form class="form-inline" style="padding-top:8px">
-			<div class="md-form my-0">
-				<input class="form-control mr-sm-20" type="text" placeholder="Search keyword" aria-label="Search" style="color:white">
-			</div>
-		</form>
-
+        
     <li class="nav-item">
-      <span class="nav-link" style="color:white;padding-left:25px;font-size:15px;">{{ request.user.username }}</span>
+      <span class="nav-link" style="color:white;font-style: italic;padding-left:25px;font-size:15px;">{{ request.user.username }}</span>
     </li>
 
     <div class="nav-item dropdown">

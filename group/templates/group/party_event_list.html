@@ -1,34 +1,39 @@
 {% extends 'party/base.html' %}
 {% load static %}
 {% block content %}
-    <br><br><br><br>
-    <a href="{% url  'authentication:group:create_event' group.0 %}" target="_blank" class="d-inline-block m-3">
-        <button type="button" class="btn btn-success d-inline-block">Create Event</button>
-    </a><br>
-    <a href="{% url  'authentication:group:members_list' group.0 %}" target="_blank" class="d-inline-block m-3">
-        <button type="button" class="btn btn-success d-inline-block">Members</button>
-    </a><br>
 
-
-
-    <div style="max-width: 910px; float: left; margin-left: 100px;">
+    <div style="max-width: 850px; float: left; margin-left: 100px; margin-top: 120px">
 
      {% if group %}
-        <h1 style=" font-size: 25px; font-weight: bold"> {{ group.1 }}</h1><br>
-         <h3>{{ group.2 }}fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj </h3><br>
+        <h1 style=" font-size: 35px; font-weight: bold"> {{ group.1 }}</h1><br>
+         <h3>{{ group.2 }}</h3><br>
     {% endif %}
+
+    <a href="{% url  'authentication:group:create_event' group.0 %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Create Event</a>
+    <br>
     {% if event %}
         {% for events in event %}
-            <strong>EVENT:</strong><br>
-            Name: {{ events.1 }}<br>
-            Description: {{ events.2 }}<br>
-            Location: {{ events.3 }}<br>
-            Date: {{ events.4 }}<br>
-            Day: {{ events.5 }}<br>
-        {% endfor %}
-    {% endif %}</div>
+            <div class="container" style="padding: 25px;">
+               <div class="card" style="max-width:1200px">
+                  <div class="card-body" style="padding: 20px">
+                    <h1 class="card-title" style="font-size: 30px">{{ events.1 }}</h1>
+                    <p class="card-text" style="font-size: 17px;" >{{ events.2 }}</p>
+                      <p class="card-text" style="font-size: 15px;" >Location : <span style="font-size: 18px">{{ events.3 }}</span></p>
+                      <p class="card-text" style="font-size: 15px;" >Date : <span style="font-size: 18px">{{ events.4 }}</span></p>
+                      <br>
+                    <a href="{% url  'authentication:group:update_event' events.0 %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Update Event</a>
+                  </div>
+               </div>
+            </div>
 
-<div class="panel-group" id="accordion" style="width: 390px; float: left; padding-left: 30px">
+        {% endfor %}
+     {% else %}
+        <h3 style="padding: 30px; padding-bottom: 30%;">No events to show</h3>
+    {% endif %}
+
+    </div>
+
+<div class="panel-group" id="accordion" style="width: 490px; float: right; padding-right: 100px; margin-top: 120px">
   <div class="panel panel-default">
      <div id="col_1" class="panel-collapse collapse in">
       <div class="panel-body">

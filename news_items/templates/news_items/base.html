@@ -45,6 +45,26 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/main.css' %}">
 
+    <style>
+        .chip {
+      display: inline-block;
+      padding: 0 25px;
+      height: 50px;
+      font-size: 16px;
+      line-height: 50px;
+      border-radius: 25px;
+      background-color: #f1f1f1;
+    }
+
+    .chip img {
+      float: left;
+      margin: 0 10px 0 -25px;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+    }
+    </style>
+
 </head>
 
 <body background="{% static 'authentication/images/middle-cover.jpg' %}">
@@ -72,10 +92,10 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="{% url 'authentication:news_items:feeds_list' %}" style="color:white;padding-left:25px">Your Feed</a>
+				<a class="nav-link" href="{% url 'authentication:news_items:regional_news' %}" style="color:white;padding-left:25px">Regional News</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link" href="{% url 'authentication:news_items:saved_queries' %}" style="color:white;padding-left:25px">Saved Searches</a>
+				<a class="nav-link" href="{% url 'authentication:news_items:national_news' %}" style="color:white;padding-left:25px">National News</a>
 			</li>
             <li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:news_items:feed_new' %}" style="color:white;padding-left:25px">Search</a>
@@ -83,14 +103,8 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 		</ul>
 
 
-		<form class="form-inline" style="padding-top:8px">
-			<div class="md-form my-0">
-				<input class="form-control mr-sm-20" type="text" placeholder="Search keyword" aria-label="Search" style="color:white">
-			</div>
-		</form>
-
     <li class="nav-item">
-      <span class="nav-link" style="color:white;padding-left:25px;font-size:15px;">{{ request.user.username }}</span>
+      <span class="nav-link" style="color:white;padding-left:25px;font-size:15px;font-style: italic">{{ request.user.username }}</span>
     </li>
 
     <div class="nav-item dropdown">
@@ -98,6 +112,7 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
         aria-expanded="false" style="padding-left:30px;padding-right: 50px; font-size:15px;">Profile</a>
       <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
         <a class="dropdown-item" href="{% url 'authentication:group:user_groups' request.user.pk %}" style="font-size:15px;">My Groups</a>
+        <a class="dropdown-item" href="{% url 'authentication:list_parties' %}" style="font-size:15px;">Change Party</a>
         <a class="dropdown-item" href="{% url 'authentication:edit_profile' %}" style="font-size:15px;">Edit Profile</a>
         <a class="dropdown-item" href="{% url 'authentication:logout' %}" style="font-size:15px;">Log Out</a>
       </div>

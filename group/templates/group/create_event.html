@@ -14,6 +14,9 @@
 						-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
                     Create Event
                 </span>
+            {% if error %}
+                <p style="color: red">{{ error }}</p>
+            {% endif %}
         {% for field in form %}
         <div class="wrap-input100 validate-input">
             <span class="label-input100 p-t-30">{{ field.label_tag }}</span><br>
@@ -24,8 +27,8 @@
           <p style="color: red">{{ error }}</p>
         {% endfor %}
         {% endfor %}
-        <div class="container-login100-form-btn p-t-20 p-l-75" >
-            <div class="wrap-login100-form-btn">
+                <div class="container-login100-form-btn p-t-20 p-l-75" >
+                <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button class="login100-form-btn">
                     Create Event
