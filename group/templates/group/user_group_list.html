@@ -17,6 +17,7 @@
                     <p>Date:</p>
                       <br><br>
                     <a href="{% url 'authentication:group:event_list' group.0 %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Visit Group</a>
+                    <a href="{% url 'authentication:group:exit_group' group.0 request.user.pk %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Exit Group</a>
                   </div>
                </div>
             </div>

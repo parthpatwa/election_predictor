@@ -160,7 +160,6 @@ def add_group_members(request, g_id=None):
         user_id = []
         for i in group_members:
             user_id.append(i.user_id_id)
-        print(user_id)
         party = Group.objects.get(pk=g_id).admin_id
         members = Profile.objects.exclude(pk__in=user_id).filter(party_id=party)
         return render(request, 'group/add_group_members.html', {'members': members, 'g_id': g_id})
@@ -230,3 +229,11 @@ def user_decline(request, g_id=None, u_id=None):
         instance = GroupMembers.objects.get(user_id_id=u_id, group_id_id=g_id)
         instance.delete()
     return HttpResponseRedirect(reverse('authentication:group:user_requested', args=(request.user.pk,)))
+
+
+def exit_group(request, g_id=None, u_id=None):
+    if g_id and u_id:
+        u_id = Profile.objects.get(profile__user_id=u_id)
+        instance = GroupMembers.objects.get(user_id_id=u_id.pk, group_id_id=g_id)
+        instance.delete()
+    return HttpResponseRedirect(reverse('authentication:group:user_groups', args=(request.user.pk,)))
