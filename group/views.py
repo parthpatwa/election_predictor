@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from group.forms import groupRegistration, eventRegistration
 from .models import Group_members, Group
-from authentication.models import Profile
+from authentication.models import Profile, Usertype
 from django.db import connection
 
 
@@ -95,7 +95,8 @@ def members_list(request, g_id=None):
         for i in group_members:
             user_id.append(i.user_id_id)
         members = Profile.objects.filter(pk__in=user_id)
-        return render(request, 'group/member_list.html', {'members': members, 'g_id': g_id})
+        user = Usertype.objects.get(user_id=request.user.pk)
+        return render(request, 'group/member_list.html', {'members': members, 'g_id': g_id, 'usertype': user})
 
 
 def add_group_members(request, g_id=None):
@@ -107,4 +108,68 @@ def add_group_members(request, g_id=None):
         print(user_id)
         party = Group.objects.get(pk=g_id).admin_id
         members = Profile.objects.exclude(pk__in=user_id).filter(party_id=party)
-        return render(request, 'group/add_group_members.html', {'members': members})
+        return render(request, 'group/add_group_members.html', {'members': members, 'g_id': g_id})
+
+
+def request_member(request, g_id=None, u_id=None):
+    if g_id and u_id:
+        Group_members.objects.create(user_id_id=u_id, group_id_id=g_id)
+    return add_group_members(request, g_id)
+
+
+def requested_members(request, g_id=None):
+    if g_id:
+        group_members = Group_members.objects.filter(group_id_id=g_id, status=False)
+        user_id = []
+        for i in group_members:
+            user_id.append(i.user_id_id)
+        members = Profile.objects.filter(pk__in=user_id)
+        return render(request, 'group/requested_member_list.html', {'members': members, 'g_id': g_id})
+
+
+def delete_request(request, g_id=None, u_id=None):
+    if g_id and u_id:
+        instance = Group_members.objects.get(user_id_id=u_id, group_id_id=g_id)
+        instance.delete()
+    return requested_members(request, g_id)
+
+
+def user_groups(request, u_id=None):
+    if u_id:
+        u_id = Profile.objects.get(profile__user_id=u_id)
+        group_members = Group_members.objects.filter(user_id=u_id, status=True)
+        group_id = []
+        for i in group_members:
+            group_id.append(i.group_id_id)
+        with connection.cursor() as cursor:
+            cursor.execute(
+                'SELECT * FROM group_group WHERE group_group.id IN %s',
+                [group_id])
+            groups = cursor.fetchall()
+        return render(request, 'group/user_group_list.html', {'groups': groups, 'u_id': u_id})
+
+
+def user_requested(request, u_id=None):
+    if u_id:
+        u_id = Profile.objects.get(profile__user_id=u_id)
+        group_members = Group_members.objects.filter(user_id=u_id, status=False)
+        group_id = []
+        for i in group_members:
+            group_id.append(i.group_id_id)
+        groups = Group.objects.filter(pk__in=group_id)
+        return render(request, 'group/user_requested.html', {'groups': groups, 'u_id': u_id})
+
+
+def user_accept(request, g_id=None, u_id=None):
+    if g_id and u_id:
+        instance = Group_members.objects.get(user_id_id=u_id, group_id_id=g_id)
+        instance.status = True
+        instance.save()
+    return user_requested(request, request.user.pk)
+
+
+def user_decline(request, g_id=None, u_id=None):
+    if g_id and u_id:
+        instance = Group_members.objects.get(user_id_id=u_id, group_id_id=g_id)
+        instance.delete()
+    return user_requested(request, request.user.pk)
