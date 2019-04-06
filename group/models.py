@@ -4,7 +4,7 @@ from authentication.models import Party, Profile
 
 class Group(models.Model):
     name = models.CharField(max_length=25, null=False)
-    description = models.TextField(max_length=200)
+    description = models.TextField(max_length=5000)
     admin_id = models.ForeignKey(Party, on_delete=models.CASCADE)
 
     def __str__(self):
