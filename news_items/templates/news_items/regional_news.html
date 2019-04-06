@@ -3,13 +3,12 @@
 {% block content %}
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-  <div class="container">
-    <h1>Regional News</h1>
-  </div>
-</div>
+<span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">
+       Regional News
+  </span>
 
-<div class="container">
+
+<div class="container" style="padding-bottom: 340px">
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
@@ -18,10 +17,5 @@
   </form>
 </div>
 
-    <div class="container">
-  <footer>
-    <p>&copy; Django News Aggregator</p>
-  </footer>
-</div> <!-- /container -->
 
 {% endblock %}

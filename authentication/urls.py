@@ -13,5 +13,5 @@ urlpatterns = [
     path('register_party/', views.register_party, name='register_party'),
     path('group/', include('group.urls')),
     path('news/', include('news_items.urls')),
-
+    path('party/', include('party.urls'))
 ]

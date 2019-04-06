@@ -3,21 +3,20 @@
 {% load static %}
 {% load bootstrap %}
 {% load widget_tweaks %}
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-    <div style="  background: #e8519e;
-  background: -webkit-linear-gradient(bottom, #e8519e, #c77ff2);
-  background: -o-linear-gradient(bottom, #e8519e, #c77ff2);
-  background: -moz-linear-gradient(bottom, #e8519e, #c77ff2);
-  background: linear-gradient(bottom, #e8519e, #c77ff2); ">
+    <div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %});">
     <div class="limiter">
         <div class="container-login100 p-t-85 p-b-85">
     <div class="wrap-login100 p-l-50 p-r-50 p-t-50 p-b-50">
             <form class="login100-form validate-form" method="post">
                 {% csrf_token %}
-                <span class="login100-form-title p-b-30">
+                <span class="login100-form-title p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff);
+						-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
                     Create Event
                 </span>
+            {% if error %}
+                <p style="color: red">{{ error }}</p>
+            {% endif %}
         {% for field in form %}
         <div class="wrap-input100 validate-input">
             <span class="label-input100 p-t-30">{{ field.label_tag }}</span><br>
@@ -28,11 +27,8 @@
           <p style="color: red">{{ error }}</p>
         {% endfor %}
         {% endfor %}
-        {% if error %}
-            <p style="color: red">{{ error }}</p>
-        {% endif %}
-        <div class="container-login100-form-btn p-t-20">
-            <div class="wrap-login100-form-btn">
+                <div class="container-login100-form-btn p-t-20 p-l-75" >
+                <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button class="login100-form-btn">
                     Create Event
