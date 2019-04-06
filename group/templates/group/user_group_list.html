@@ -4,8 +4,9 @@
 <div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %});">
     <span class="login100-form-title p-t-100 p-b-30" style="background: #3c96ff; background: -webkit-linear-gradient(45deg, #2dfbff, #3c96ff);
 						-webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:35px;">
-                    Groups
+                    Your Groups
                 </span>
+    <a href="{% url 'authentication:group:user_requested' request.user.pk %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Requested Group</a>
     {% if groups %}
         {% for group in groups %}
             <div class="container">
@@ -22,10 +23,5 @@
             <br><br>
         {% endfor %}
     {% endif %}
-
-    <br><br><br>
-    <div id="mybutton">
-      <a href="{% url  'authentication:group:create_group' request.user.pk %}"><abbr title="Click to add a new Group"><button class="feedback"><img src="https://img.icons8.com/nolan/64/000000/plus-math.png" style="width:35px;height: auto"></button></abbr></a>
-    </div>
 </div>
 {% endblock %}
