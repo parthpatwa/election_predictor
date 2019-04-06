@@ -34,7 +34,7 @@ def feeds_list(request):  # 1
     # feeds = Feed.objects.filter(query__query_fk__user=request.user)
     with connection.cursor() as cursor:
         cursor.execute(
-            'select * from news_items_feed where query_id = (select query_id from news_items_query where query_fk_id = %s)',
+            'select * from news_items_feed where query_id in (select query_id from news_items_query where query_fk_id = %s)',
             [request.user.pk])
         feeds = cursor.fetchall()
     return render(request, 'news_items/feeds_list.html', {'feeds': feeds})
@@ -93,7 +93,10 @@ def new_feed(request):
 
                     article.publication_date = dateString
                     article.feed = feed
-                    article.save()
+                    try:
+                        article.save()
+                    except:
+                        pass
             articles = Article.objects.filter(feed__url=url)  # 6
             # articles = "SELECT news_items_article.id, news_items_article.feed_id, news_items_article.title, news_items_article.url, news_items_article.description, news_items_article.publication_date FROM news_items_article INNER JOIN news_items_feed ON (news_items_article.feed_id = news_items_feed.id) WHERE news_items_feed.url ='"+url+"';"
             # file.write('\narticles_'+str(articles.query)+'\n')
