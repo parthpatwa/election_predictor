@@ -15,6 +15,11 @@
             Location: {{ events.3 }}<br>
             Date: {{ events.4 }}<br>
             Day: {{ events.5 }}<br>
+            <a href="{% url  'authentication:group:update_event' events.0 %}" target="_blank" class="d-inline-block m-3">
+            <button type="button" class="btn btn-success d-inline-block">Update Event</button>
+            </a><br>
         {% endfor %}
+    {% else %}
+        <h3>No events to show</h3>
     {% endif %}
 {% endblock %}
