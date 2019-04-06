@@ -26,13 +26,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Django New Aggregator</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
               <li><a href="{% url 'authentication:news_items:articles_list' %}">Home</a></li>
-              <li><a href="{% url 'authentication:news_items:feeds_list' %}">Feeds</a></li>
+{#              <li><a href="{% url 'authentication:news_items:feeds_list' %}">Feeds</a></li>#}
               <li><a href="{% url 'authentication:news_items:saved_queries' %}">Saved Searches</a></li>
+              <li>
+                  <a href="{% url 'authentication:news_items:regional_news' %}">
+                          Regional News
+                  </a>
+              </li>
+              <li>
+                  <a href="{% url 'authentication:news_items:national_news' %}">
+                          National News
+                  </a>
+              </li>
               <li><a href="{% url 'authentication:news_items:feed_new' %}">
                             <button type="submit"
                                     style="padding:10px;background-color:#4CAF50;border:none;color:white;display:inline-block">
