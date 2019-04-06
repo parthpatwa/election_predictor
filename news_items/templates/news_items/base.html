@@ -1,61 +1,246 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Django News Aggregator</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/css/mdb.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Allura" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Roboto" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-  </head>
 
-  <body>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/js/mdb.min.js"></script>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Django New Aggregator</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-              <li><a href="{% url 'authentication:news_items:articles_list' %}">Home</a></li>
-              <li><a href="{% url 'authentication:news_items:feeds_list' %}">Feeds</a></li>
-              <li><a href="{% url 'authentication:news_items:saved_queries' %}">Saved Searches</a></li>
-              <li><a href="{% url 'authentication:news_items:feed_new' %}">
-                            <button type="submit"
-                                    style="padding:10px;background-color:#4CAF50;border:none;color:white;display:inline-block">
-                                <span class="icon-magnifier search-icon"></span> SEARCH
-                            </button>
-              </a>
-              </li>
-              <li><a href="{% url 'authentication:group:user_groups' request.user.pk %}">My Groups</a></li>
-              <li><a href="{% url 'authentication:logout' %}">Logout</a></li>
-              <li><a href="{% url 'authentication:edit_profile' %}">Edit Profile</a></li>
-          </ul>
-        </div>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+	<link rel="icon" type="image/png" href="{% static 'authentication/images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/main.css' %}">
+
+</head>
+
+<body background="{% static 'authentication/images/middle-cover.jpg' %}">
+
+<nav class="navbar fixed-top navbar-expand-lg py-1 mb-md-0 mb-4 z-depth-1" style="background: -webkit-linear-gradient(left, #3c96ff 0%, #2dfbff 100%) !important;
+background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; color:white;">
+
+	<!-- Navbar brand -->
+	<a class="navbar-brand" href="#" style="color:white;font-size: 35px;font-family:'Allura';padding-left:50px">Election Predictor</a>
+
+	<!-- Collapse button -->
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+		aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<!-- Collapsible content -->
+	<div class="collapse navbar-collapse" id="basicExampleNav" style="font-family:Poppins;">
+
+		<!-- Links -->
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="{% url 'authentication:news_items:articles_list' %}" style="color:white;padding-left:50px;">Home
+					<span class="sr-only">(current)</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'authentication:news_items:feeds_list' %}" style="color:white;padding-left:25px">Your Feed</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link" href="{% url 'authentication:news_items:saved_queries' %}" style="color:white;padding-left:25px">Saved Searches</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link" href="{% url 'authentication:news_items:feed_new' %}" style="color:white;padding-left:25px">Search</a>
+			</li>
+		</ul>
+
+
+		<form class="form-inline" style="padding-top:8px">
+			<div class="md-form my-0">
+				<input class="form-control mr-sm-20" type="text" placeholder="Search keyword" aria-label="Search" style="color:white">
+			</div>
+		</form>
+
+    <li class="nav-item">
+      <span class="nav-link" style="color:white;padding-left:25px;font-size:15px;">{{ request.user.username }}</span>
+    </li>
+
+    <div class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false" style="padding-left:30px;padding-right: 50px; font-size:15px;">Profile</a>
+      <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item" href="{% url 'authentication:group:user_groups' request.user.pk %}" style="font-size:15px;">My Groups</a>
+        <a class="dropdown-item" href="{% url 'authentication:edit_profile' %}" style="font-size:15px;">Edit Profile</a>
+        <a class="dropdown-item" href="{% url 'authentication:logout' %}" style="font-size:15px;">Log Out</a>
       </div>
-    </nav>
+    </div>
+	</div>
+</nav>
 
-    {% block content %}
-    {% endblock %}
+{% block content %}
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  </body>
+{% endblock %}
+
+	<!-- Footer -->
+	<footer class="page-footer font-small mdb-color pt-4" style="background: -webkit-linear-gradient(left, #3c96ff 0%, #2dfbff 100%) !important;
+	background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; color:white; font-family:Poppins;">
+
+	    <!-- Footer Links -->
+	    <div class="container text-center text-md-left">
+
+	      <!-- Footer links -->
+	      <div class="row text-center text-md-left mt-3 pb-3">
+
+	        <!-- Grid column -->
+	        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+	          <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
+	          <p>
+	            <a href="#!">MDBootstrap</a>
+	          </p>
+	          <p>
+	            <a href="#!">MDWordPress</a>
+	          </p>
+	        </div>
+	        <!-- Grid column -->
+
+	        <hr class="w-100 clearfix d-md-none">
+
+	        <!-- Grid column -->
+	        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+	          <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
+	          <p>
+	            <a href="#!">Your Account</a>
+	          </p>
+	          <p>
+	            <a href="#!">Become an Affiliate</a>
+	          </p>
+	        </div>
+
+	        <!-- Grid column -->
+	        <hr class="w-100 clearfix d-md-none">
+
+	        <!-- Grid column -->
+	        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+	          <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+	          <p style="color:white">
+	            <i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+	          <p style="color:white">
+	            <i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
+	        </div>
+	        <!-- Grid column -->
+
+	      </div>
+	      <!-- Footer links -->
+
+	      <hr>
+
+	      <!-- Grid row -->
+	      <div class="row d-flex align-items-center" style=" padding-bottom : 15px;">
+
+	        <!-- Grid column -->
+	        <div class="col-md-7 col-lg-8">
+
+	          <!--Copyright-->
+	          <p class="text-center text-md-left" style="color:white" >Election Predictor
+	          </p>
+
+	        </div>
+	        <!-- Grid column -->
+
+	        <!-- Grid column -->
+	        <div class="col-md-5 col-lg-4 ml-lg-0">
+
+	          <!-- Social buttons -->
+	          <div class="text-center text-md-right">
+	            <ul class="list-unstyled list-inline">
+	              <li class="list-inline-item">
+	                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+	                  <i class="fab fa-facebook-f"></i>
+	                </a>
+	              </li>
+	              <li class="list-inline-item">
+	                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+	                  <i class="fab fa-twitter"></i>
+	                </a>
+	              </li>
+	              <li class="list-inline-item">
+	                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+	                  <i class="fab fa-google-plus-g"></i>
+	                </a>
+	              </li>
+	              <li class="list-inline-item">
+	                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+	                  <i class="fab fa-linkedin-in"></i>
+	                </a>
+	              </li>
+	            </ul>
+	          </div>
+
+	        </div>
+	        <!-- Grid column -->
+
+	      </div>
+	      <!-- Grid row -->
+
+	    </div>
+	    <!-- Footer Links -->
+
+	  </footer>
+	  <!-- Footer -->
+
+
+		<script>
+		$(document).ready(function(){
+		  $(".dropdown-toggle").dropdown();
+		});
+		</script>
+
+<!--===============================================================================================-->
+	<script src="{% static 'authentication/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'authentication/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'authentication/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'authentication/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'authentication/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'authentication/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'authentication/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'authentication/vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'authentication/js/main.js' %}"></script>
+    <script src="{% static 'authentication/js/main2.js' %}"></script>
+	<script src="{% static 'authentication/js/scrolling-nav.js' %}"></script>
+
+</body>
 </html>

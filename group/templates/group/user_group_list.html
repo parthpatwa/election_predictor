@@ -1,4 +1,4 @@
-{% extends 'party/base.html' %}
+{% extends 'news_items/base.html' %}
 {% load static %}
 {% block content %}
 <div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %});">
@@ -6,7 +6,7 @@
 						-webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:35px;">
                     Your Groups
                 </span>
-    <a href="{% url 'authentication:group:user_requested' request.user.pk %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Requested Group</a>
+
     {% if groups %}
         {% for group in groups %}
             <div class="container">
@@ -22,6 +22,12 @@
             </div>
             <br><br>
         {% endfor %}
+     {% else %}
+        <div style="text-align: center">
+            <p class="p-t-150" style="padding-bottom: 45px; font-size: 20px;">Your not part of any Political Groups. You have to be requested first by any party group in order to be a member of that group.</p>
+        </div><br>
     {% endif %}
+
+    <div style="text-align: center; padding-bottom: 130px"><a href="{% url 'authentication:group:user_requested' request.user.pk %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Requested Groups</a></div>
 </div>
 {% endblock %}

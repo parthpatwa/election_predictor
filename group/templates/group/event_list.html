@@ -1,12 +1,22 @@
 {% extends 'party/base.html' %}
+{% load static %}
 {% block content %}
-    <br><br><br><br><br><br><br><br><br>
-    <a href="{% url  'authentication:group:create_event' g_id %}" target="_blank" class="d-inline-block m-3">
+    <br><br><br><br>
+    <a href="{% url  'authentication:group:create_event' group.0 %}" target="_blank" class="d-inline-block m-3">
         <button type="button" class="btn btn-success d-inline-block">Create Event</button>
     </a><br>
-    <a href="{% url  'authentication:group:members_list' g_id %}" target="_blank" class="d-inline-block m-3">
+    <a href="{% url  'authentication:group:members_list' group.0 %}" target="_blank" class="d-inline-block m-3">
         <button type="button" class="btn btn-success d-inline-block">Members</button>
     </a><br>
+
+
+
+    <div style="max-width: 910px; float: left; margin-left: 100px;">
+
+     {% if group %}
+        <h1 style=" font-size: 25px; font-weight: bold"> {{ group.1 }}</h1><br>
+         <h3>{{ group.2 }}fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj fgggjkjfkjdjkfj </h3><br>
+    {% endif %}
     {% if event %}
         {% for events in event %}
             <strong>EVENT:</strong><br>
@@ -16,5 +26,48 @@
             Date: {{ events.4 }}<br>
             Day: {{ events.5 }}<br>
         {% endfor %}
-    {% endif %}
+    {% endif %}</div>
+
+<div class="panel-group" id="accordion" style="width: 390px; float: left; padding-left: 30px">
+  <div class="panel panel-default">
+     <div id="col_1" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="panel-group" id="accordion-inner" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title" style="font-size: 14px;">
+              <a class="accordion-toggle2" href="{% url  'authentication:group:members_list' group.0 %}">
+                  Group Members
+              </a>
+            </h4>
+          </div>
+        </div>
+        {% if usertype.is_party %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title" style="font-size: 14px;">
+              <a class="accordion-toggle2" href="{% url 'authentication:group:add_group_members' group.0 %}">
+                  Add Group Members
+              </a>
+            </h4>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title" style="font-size: 14px;">
+              <a class="accordion-toggle2" href="{% url 'authentication:group:requested_members' group.0 %}">
+                Pending Requests
+              </a>
+            </h4>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+    <div style="clear: both"></div>
 {% endblock %}

@@ -1,27 +1,27 @@
 {% extends 'news_items/base.html' %}
-
+{% load static %}
 {% block content %}
+{% load widget_tweaks %}
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-  <div class="container">
-    <h1>Search News</h1>
-  </div>
-</div>
+<div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %})">
+  <span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">
+       Enter Search keyword
+  </span>
 
-<div class="container">
+
+<div class="container" style="padding-bottom: 280px">
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <hr>
+    {% for field in form %}
+        <div class="wrap-input100 validate-input">
+            <span class="label-input100 p-t-30">{{ field.label_tag }}</span><br>
+            {{ field|add_class:"input100"}}
+            <span class="focus-input100"></span>
+        </div>
+        {% endfor %}
+
     <button type="submit" class="btn btn-primary">Search</button>
   </form>
+</div><br>
 </div>
-
-    <div class="container">
-  <footer>
-    <p>&copy; 2015 Django News Aggregator</p>
-  </footer>
-</div> <!-- /container -->
-
 {% endblock %}

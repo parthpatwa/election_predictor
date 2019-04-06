@@ -1,29 +1,25 @@
 {% extends 'news_items/base.html' %}
-
+{% load static %}
 {% block content %}
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-  <div class="container">
-    <h1>Search Results</h1>
-  </div>
-</div>
+<div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %}); position: relative">
 
-    <div class="container">
-  {% for row in rows %}
-  <div class="col-md-6">
-    {% for entry in row %}
-    <h2>{{entry.title}}</h2>
-    <p>{{entry.description | safe}}</p>
-    <p><a href="{{entry.url}}" target="_blank" class="btn btn-primary">View Details</a></p>
+  <span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:35px;">
+      Search Results
+  </span>
+
+  <div class="container">
+
+    {% for row in rows %}
+    <div class="col-md-6">
+      {% for entry in row %}
+        <h2>{{entry.title}}</h2>
+        <p>{{entry.description | safe}}</p>
+        <p><a href="{{entry.url}}" target="_blank" class="btn btn-primary">View Details</a></p><br>
+        {% endfor %}
+    </div>
     {% endfor %}
+
   </div>
-  {% endfor %}
-</div>
-    <div class="container">
-  <footer>
-    <p>&copy; 2015 Django News Aggregator</p>
-  </footer>
-</div> <!-- /container -->
 
 {% endblock %}

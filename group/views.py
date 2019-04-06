@@ -74,7 +74,12 @@ def event_list(request, g_id=None):
         with connection.cursor() as cursor:
             cursor.execute('select * from group_event where group_id_id = %s', [g_id])
             event = cursor.fetchall()
-        return render(request, 'group/event_list.html', {'event': event, 'g_id': g_id})
+        with connection.cursor() as cursor:
+            cursor.execute('select * from group_group where id = %s', [g_id])
+            group = cursor.fetchall()
+        print('**********************************************8',group[0])
+        usertype = Usertype.objects.get(user_id=request.user.pk)
+        return render(request, 'group/event_list.html', {'event': event, 'group': group[0], 'usertype': usertype})
     else:
         return redirect('authentication:group:group_list')
 

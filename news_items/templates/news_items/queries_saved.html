@@ -1,34 +1,28 @@
 {% extends 'news_items/base.html' %}
-
+{% load static %}
 {% block content %}
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-  <div class="container">
-    <h1>Saved Searches</h1>
-  </div>
-</div>
-
+<div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %})">
+  <span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:35px;">
+       Saved Searches
+  </span>
 
 
 <div class="container">
 
-
 <div>
-      {% for row in savedqps %}
+    {% for row in savedqps %}
         <form method="POST" action="{% url 'authentication:news_items:saved_queries' %}">
             {% csrf_token %}
 
-    <h2>{{row.0}}</h2>
+    <span style="font-size: large">{{row.0}}</span>
       <button class="btn btn-primary" name="delete" type="submit" value="{{ row.0 }}">
           Delete
       </button>
-        </form>
+        </form><br>
     {% endfor %}
   </div>
-  <footer>
-    <p>&copy; 2015 Django News Aggregator</p>
-  </footer>
-</div> <!-- /container -->
 
+</div> <!-- /container -->
+</div>
 {% endblock %}
