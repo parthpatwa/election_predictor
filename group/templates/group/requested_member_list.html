@@ -1,13 +1,25 @@
-{% extends 'authentication/base.html' %}
+{% extends 'party/base.html' %}
 {% block content %}
 {% load static %}
 {% load bootstrap %}
 {% load widget_tweaks %}
-    <br><br><br><br><br><br><br>\
-    Requested Members:
+
+    <div style="padding-bottom: 380px;margin-left: 100px">
+
+    <span class="login100-form-title p-t-100 p-b-10" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">
+        Pending Members
+    </span>
+        <p style="text-align: center; padding-bottom: 30px ">Click on '-' to cancel the invitation of the user</p>
     {% if members %}
         {% for member in members %}
-            {{ member.first_name }}&nbsp;{{ member.last_name }}<a href="{% url 'authentication:group:delete_request' g_id member.pk %}"><input type="button" class="btn-primary" value="Cancel"></a><br>
+            <div style="padding: 3px">
+            <div class="chip">
+              <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
+                {{ member.first_name}}&nbsp;{{ member.last_name }} &nbsp;&nbsp;<a href="{% url 'authentication:group:delete_request' g_id member.pk %}"><i style="font-size:17px" class="fa">&#xf068;</i></a>
+            </div></div>
         {% endfor %}
     {% endif %}
+
+    </div>
+
 {% endblock %}

@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from authentication.forms import Registration, PartyRegistration, CreateProfile, UpdateProfile
@@ -15,10 +16,6 @@ from authentication.models import Profile, Party
 from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.db import connection
-
-
-def registration_all(request):
-    return render(request, 'authentication/registration_all.html')
 
 
 @login_required
@@ -37,8 +34,9 @@ def choose_party(request, p_id=None):
     if p_id:
         user = request.user
         user_profile = Profile.objects.get(profile__user__username=user)
-        user_profile.party_id_id = p_id
-        user_profile.save()
+        if user_profile.party_id_id != p_id:
+            user_profile.party_id_id = p_id
+            user_profile.save()
         return redirect('news_items:articles_list')
 
 
@@ -57,7 +55,7 @@ def login_user(request):
             if u.usertype.is_user:
                 return redirect('news_items:articles_list')
             elif u.usertype.is_party:
-                return render(request, 'party/party.html')
+                return redirect('authentication:party:party')
             else:
                 return HttpResponse('User does not exist')
 
@@ -78,7 +76,7 @@ def edit_profile(request):
                 party.name = form_party_details.cleaned_data['name']
                 party.description = form_party_details.cleaned_data['description']
                 party.save()
-                return render(request, 'party/party.html')
+                return redirect('authentication:party:party')
 
         else:
             form = UpdateProfile(instance=user)
@@ -111,7 +109,7 @@ def edit_profile(request):
 @login_required
 def logout_user(request):
     logout(request)
-    return redirect('registration')
+    return redirect('login')
 
 
 def activate(request, uidb64, token):

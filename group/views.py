@@ -81,7 +81,15 @@ def event_list(request, g_id=None):
         with connection.cursor() as cursor:
             cursor.execute('select * from group_event where group_id_id = %s', [g_id])
             event = cursor.fetchall()
-        return render(request, 'group/event_list.html', {'event': event, 'g_id': g_id})
+        with connection.cursor() as cursor:
+            cursor.execute('select * from group_group where id = %s', [g_id])
+            group = cursor.fetchall()
+        print('**********************************************8',group[0])
+        usertype = Usertype.objects.get(user_id=request.user.pk)
+        if usertype.is_party:
+            return render(request, 'group/party_event_list.html', {'event': event, 'group': group[0], 'usertype': usertype})
+        else:
+            return render(request, 'group/user_event_list.html', {'event': event, 'group': group[0], 'usertype': usertype})
     else:
         return redirect('authentication:group:group_list')
 
@@ -115,7 +123,7 @@ def create_event(request, g_id=None):
                 with connection.cursor() as cursor:
                     cursor.execute('select * from group_event where group_id_id = %s', [g_id])
                     event = cursor.fetchall()
-                return render(request, 'group/event_list.html', {'event': event, 'g_id': g_id})
+                return render(request, 'group/party_event_list.html', {'event': event, 'g_id': g_id})
 
         else:
             return render(request, 'group/create_event.html', {'form': form, })
@@ -151,7 +159,10 @@ def members_list(request, g_id=None):
             user_id.append(i.user_id_id)
         members = Profile.objects.filter(pk__in=user_id)
         user = Usertype.objects.get(user_id=request.user.pk)
-        return render(request, 'group/member_list.html', {'members': members, 'g_id': g_id, 'usertype': user})
+        if user.is_party:
+            return render(request, 'group/party_member_list.html', {'members': members, 'g_id': g_id})
+        else:
+            return render(request, 'group/user_member_list.html', {'members': members, 'g_id': g_id})
 
 
 def add_group_members(request, g_id=None):

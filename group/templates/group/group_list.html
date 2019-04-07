@@ -13,8 +13,7 @@
                   <div class="card-body" style="padding: 30px">
                     <h1 class="card-title" style="font-weight: bold">{{ group.1 }}</h1>
                     <p class="card-text" style="font-size: 16px;" >{{ group.2 }}</p>
-                    <p>Date:</p>
-                      <br><br>
+                    <br><br>
                     <a href="{% url 'authentication:group:event_list' group.0 %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Visit Group</a>
                     <a href="{% url 'authentication:group:update_group' group.0 %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Update Group</a>
                   </div>

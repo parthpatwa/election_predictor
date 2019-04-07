@@ -1,12 +1,16 @@
-<html>
-<body>
-    <h2>Choose your party</h2>
-    <div class="nav-item dropdown">
-      <div class="dropdown-menu dropdown-primary" aria-labelledby="DropdownMenuLink">
-          {% for party in parties %}
-              <h2><a href = "{% url 'authentication:choose_party' party.id %}">{{ party.name }}</a></h2>
-          {% endfor %}
-      </div>
+{% extends 'news_items/base.html' %}
+{% block content %}
+
+    <span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">
+       Change your party
+    </span>
+
+    <div style="margin-left: 150px;padding-bottom: 335px;">
+        <h2 style="font-size: 15px;">Select one to switch your party!! </h2><br>
+        {% for party in parties %}
+            <div style="margin-left: 30px ">
+                <h2><a href = "{% url 'authentication:choose_party' party.id %}" style="font-size: 20px; color: black;">&longrightarrow;&nbsp; {{ party.name }}</a></h2>
+            </div><br>
+        {% endfor %}
     </div>
-</body>
-</html>
+{% endblock %}

@@ -1,18 +1,18 @@
 {% extends 'party/base.html' %}
 {% load static %}
 {% block content %}
-<div style="background-image: url({% static 'authentication/images/blog-page-background.jpg' %});">
+
       <div class="container1" style="margin:120px 0px 40px 0px; ">
-    <img src="{% static 'authentication/images/party-pic.jpg' %}" alt="BJP" class="image center">
+
   </div>
 
 
   <div class="">
-    <center><p style="font-size:40px; color:black">Bharatiya Janatha Party</p></center>
+    <center><p style="font-size:40px; color:black">{{ party.name }}</p></center>
   </div>
 
-  <div class="" style="margin: 20px 100px 50px 100px">
-    <center><p>description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description </p></center>
+  <div class="" style="margin: 20px 100px 50px 100px; padding-bottom: 250px">
+    <center><p>{{ party.description }}</p></center>
   </div>
-</div>
+
 {% endblock %}
