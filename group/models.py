@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from authentication.models import Party, Profile, Usertype
 
@@ -25,19 +26,27 @@ class GroupMembers(models.Model):
 
 class Event(models.Model):
     name = models.CharField(max_length=25, null=False)
-    description = models.TextField(max_length=200)
+    description = models.TextField(max_length=1000)
     location = models.CharField(max_length=100)
-    date = models.DateField()
+    date = models.DateTimeField(default=timezone.now)
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def _str_(self):
         return self.name
 
     class Meta:
         unique_together = ('name', 'group_id')
 
 
-class group_affiliation_archive(models.Model):
-    member = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    changedat = models.TimeField(auto_now_add=True)
+class Arch_Event(models.Model):
+    name = models.CharField(max_length=25, null=False)
+    description = models.TextField(max_length=1000)
+    location = models.CharField(max_length=100)
+    date = models.DateTimeField(default=timezone.now)
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    def _str_(self):
+        return self.name
+
+    class Meta:
+        unique_together = ('name', 'group_id')
