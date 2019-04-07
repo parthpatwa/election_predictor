@@ -17,6 +17,7 @@ from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.db import connection
 
+trig_executed = False
 
 @login_required
 def list_parties(request):
@@ -31,10 +32,27 @@ def list_parties(request):
 
 
 def choose_party(request, p_id=None):
+    trig = '''DELIMITER //
+    CREATE TRIGGER before_party_affiliation_update 
+        BEFORE UPDATE ON authentication_profile
+        FOR EACH ROW 
+        BEGIN
+            IF OLD.party_id_id != NEW.party_id_id THEN
+                INSERT INTO authentication_affiliation(user_id,party_id,time) values(OLD.profile_id,OLD.party_id_id,NOW());
+                DELETE FROM group_groupmembers WHERE user_id_id = OLD.id;
+            END IF; 
+            
+        END //
+DELIMITER ;'''
+    if not trig_executed:
+        with connection.cursor():
+            cursor.execute(trig)
+            trig_executed = True
     if p_id:
         user = request.user
         user_profile = Profile.objects.get(profile__user__username=user)
         user_profile.party_id_id = p_id
+
         user_profile.save()
         return redirect('news_items:articles_list')
 

@@ -37,3 +37,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.profile.user.username
+class Affiliation(models.Model):
+    user = models.ForeignKey(Usertype, on_delete=models.CASCADE, null=True)
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, null=True)
+    time = models.TimeField(auto_now_add=True)
