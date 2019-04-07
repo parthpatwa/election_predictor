@@ -3,4 +3,5 @@ from . import views
 app_name = 'party'
 urlpatterns = [
     path('', views.party,name='party')
+
 ]
