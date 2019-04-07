@@ -164,8 +164,21 @@ def members_list(request, g_id=None):
         else:
             return render(request, 'group/user_member_list.html', {'members': members, 'g_id': g_id})
 
-
+trig_executed = False
 def add_group_members(request, g_id=None):
+    trig = '''DELIMITER $$
+    CREATE TRIGGER before_group_affiliation_update 
+    BEFORE UPDATE ON group_groupmembers
+    FOR EACH ROW 
+        BEGIN
+            INSERT INTO group_affiliation_archive(member_id,group_id,changedat)
+            values (OLD.user_id_id,OLD.group_id_id, NOW()); 
+    END$$
+    DELIMITER ;'''
+    if not trig_executed:
+        with connection.cursor():
+            cursor.execute(trig)
+            trig_executed = True
     if g_id:
         group_members = GroupMembers.objects.filter(group_id_id=g_id)
         user_id = []
