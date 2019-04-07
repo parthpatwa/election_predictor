@@ -35,7 +35,9 @@ class Event(models.Model):
 
     class Meta:
         unique_together = ('name', 'group_id')
+
+
 class group_affiliation_archive(models.Model):
-    member = models.ForeignKey(Usertype,on_delete=models.CASCADE)
-    group = models.ForeignKey(Group,on_delete=models.CASCADE)
+    member = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     changedat = models.TimeField(auto_now_add=True)

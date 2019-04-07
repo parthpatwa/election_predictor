@@ -17,7 +17,8 @@ from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.db import connection
 
-trig_executed = False
+
+# trig_executed = False
 
 @login_required
 def list_parties(request):
@@ -32,6 +33,7 @@ def list_parties(request):
 
 
 def choose_party(request, p_id=None):
+    # global trig_executed
     trig = '''DELIMITER //
     CREATE TRIGGER before_party_affiliation_update 
         BEFORE UPDATE ON authentication_profile
@@ -44,15 +46,14 @@ def choose_party(request, p_id=None):
             
         END //
 DELIMITER ;'''
-    if not trig_executed:
-        with connection.cursor():
-            cursor.execute(trig)
-            trig_executed = True
+    # if not False:
+    #     with connection.cursor() as cursor:
+    # cursor.execute(trig)
+    # trig_executed = True
     if p_id:
         user = request.user
         user_profile = Profile.objects.get(profile__user__username=user)
         user_profile.party_id_id = p_id
-
         user_profile.save()
         return redirect('news_items:articles_list')
 
@@ -217,7 +218,7 @@ def register_party(request):
                     'insert into authentication_party(name, description, created_at, credit_amount,party_id) values (%s,%s,%s,%s,%s)',
                     [name, description, datetime.now(), 0, user.pk])
 
-            return render(request, 'party/party.html')
+            return redirect('authentication:login_user')
 
     return render(request, 'authentication/register.html',
                   {'form': form_basic, 'form_party': form_party})
