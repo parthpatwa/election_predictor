@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -133,7 +133,7 @@ LOGIN_URL = 'authentication:login_user'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'jiteshmalipeddi92@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ilovemyparents'
+EMAIL_HOST_USER = 'genericproject11@gmail.com'
+EMAIL_HOST_PASSWORD = 'iambatman@Jitesh'
 EMAIL_PORT = 587
 
