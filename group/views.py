@@ -12,9 +12,7 @@ from django.db import connection
 def groups_list(request, p_id=None):
     if p_id:
         with connection.cursor() as cursor:
-            cursor.execute(
-                'select * from group_group where admin_id_id = (select id from authentication_party where party_id = %s)',
-                [p_id])
+            cursor.execute('CALL get_group_list(%s)',[p_id])
             groups = cursor.fetchall()
 
             return render(request, 'group/group_list.html', {'groups': groups})
@@ -127,7 +125,11 @@ def create_event(request, g_id=None):
                 with connection.cursor() as cursor:
                     cursor.execute('select * from group_group where id = %s', [g_id])
                     group = cursor.fetchall()
-                return render(request, 'group/party_event_list.html', {'event': event, 'g_id': g_id, 'group': group[0]})
+                usertype = Usertype.objects.get(user_id=request.user.pk)
+                if usertype.is_party:
+                    return render(request, 'group/party_event_list.html', {'event': event, 'g_id': g_id, 'group': group[0], 'user':usertype})
+                else:
+                    return render(request, 'group/user_event_list.html', {'event': event, 'g_id': g_id, 'group': group[0], 'user': usertype})
 
         else:
             return render(request, 'group/create_event.html', {'form': form, })
