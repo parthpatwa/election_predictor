@@ -25,7 +25,7 @@ class GroupMembers(models.Model):
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=25, null=False)
+    name = models.CharField(max_length=100, null=False)
     description = models.TextField(max_length=1000)
     location = models.CharField(max_length=100)
     date = models.DateTimeField(default=timezone.now)
