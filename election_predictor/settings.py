@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'party',
     'bootstrapform',
     'widget_tweaks',
+    'twitter_data_analysis'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'election_predictordb',
         'USER': 'root',
-        'PASSWORD': 'snowysatish1248',
+        'PASSWORD': 'iiits@123',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -115,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -133,7 +134,7 @@ LOGIN_URL = 'authentication:login_user'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'jiteshmalipeddi92@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ilovemyparents'
+EMAIL_HOST_USER = 'genericproject11@gmail.com'
+EMAIL_HOST_PASSWORD = 'iambatman@Jitesh'
 EMAIL_PORT = 587
 
