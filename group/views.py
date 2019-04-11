@@ -12,12 +12,9 @@ from django.db import connection
 def groups_list(request, p_id=None):
     if p_id:
         with connection.cursor() as cursor:
-            cursor.execute(
-                'select * from group_group where admin_id_id = (select id from authentication_party where party_id = %s)',
-                [p_id])
+            cursor.execute('CALL get_group_list(%s)', [p_id])
             groups = cursor.fetchall()
-
-            return render(request, 'group/group_list.html', {'groups': groups})
+        return render(request, 'group/group_list.html', {'groups': groups})
     else:
         return redirect('authentication:login_user')
 
