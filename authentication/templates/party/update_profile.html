@@ -1,7 +1,25 @@
-{% extends 'news_items/base.html' %}
+{% extends 'party/base.html' %}
 {% load static %}
 {% load bootstrap %}
 {% load widget_tweaks %}
+
+{% block nav %}
+
+  		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="{% url 'authentication:party:party' %}" style="color:white;padding-left:25px;padding-right: 25px">Home
+					<span class="sr-only">(current)</span>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{% url 'authentication:group:group_list' request.user.pk %}" style="color:white;padding-left:20px;padding-right: 20px">Groups</a>
+			</li>
+		</ul>
+
+
+{% endblock %}
+
+
 {% block content %}
 {% if user.is_authenticated %}
 
@@ -51,7 +69,7 @@
         {% endfor %}
             {% endfor %}
         {% endif %}
-        <div class="container-login100-form-btn p-t-20">
+        <div class="container-login100-form-btn p-t-20 p-l-75">
             <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
                 <button class="login100-form-btn">
