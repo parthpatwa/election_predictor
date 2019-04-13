@@ -50,3 +50,18 @@ class Arch_Event(models.Model):
 
     class Meta:
         unique_together = ('name', 'group_id')
+
+
+class Event_Forum(models.Model):
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
+    comment = models.TextField()
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+
+class EventMembers(models.Model):
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('event_id', 'user_id')
