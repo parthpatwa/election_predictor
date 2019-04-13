@@ -19,5 +19,8 @@ urlpatterns = [
     path('user_accept/<int:g_id>/<int:u_id>', views.user_accept, name='user_accept'),
     path('user_decline/<int:g_id>/<int:u_id>', views.user_decline, name='user_decline'),
     path('exit_group/<int:g_id>/<int:u_id>', views.exit_group, name='exit_group'),
-    path('events/', views.events_location, name='events_location')
+    path('events/', views.events_location, name='events_location'),
+    path('delete_event/<int:g_id>/<int:event_id>', views.delete_event, name='delete_event'),
+    path('join_event/<int:e_id>', views.join_event, name='join_event'),
+    path('leave_event/<int:e_id>', views.leave_event, name='leave_event'),
 ]

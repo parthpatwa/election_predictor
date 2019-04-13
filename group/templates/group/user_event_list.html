@@ -22,6 +22,7 @@
                       <p class="card-text" style="font-size: 15px;" >Date : <span style="font-size: 18px">{{ events.4 }}</span></p>
                       <br>
                     <a href="{% url  'authentication:group:update_event' events.0 %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Update Event</a>
+                    <a href="{% url  'authentication:group:delete_event' group.0 events.0 %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Delete Event</a>
                   </div>
                </div>
             </div>

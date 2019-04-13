@@ -57,3 +57,11 @@ class Event_Forum(models.Model):
     date = models.DateTimeField(default=timezone.now)
     comment = models.TextField()
     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+
+class EventMembers(models.Model):
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('event_id', 'user_id')
