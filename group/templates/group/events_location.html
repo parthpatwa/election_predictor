@@ -1,0 +1,11 @@
+{% extends 'news_items/base.html' %}
+{% block content %}
+    {% if events %}
+        {% for event in events %}
+            Name : {{ event.name }}<br>
+            Description : {{ event.description }}<br>
+            Location : {{ event.location }}<br>
+            date : {{ event.date }}<br><br><br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

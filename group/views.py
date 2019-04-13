@@ -124,7 +124,11 @@ def create_event(request, g_id=None):
                 with connection.cursor() as cursor:
                     cursor.execute('select * from group_group where id = %s', [g_id])
                     group = cursor.fetchall()
-                return render(request, 'group/party_event_list.html', {'event': event, 'g_id': g_id, 'group': group[0]})
+                usertype = Usertype.objects.get(user_id=request.user.pk)
+                if usertype.is_party:
+                    return render(request, 'group/party_event_list.html', {'event': event, 'g_id': g_id, 'group': group[0], 'user':usertype})
+                else:
+                    return render(request, 'group/user_event_list.html', {'event': event, 'g_id': g_id, 'group': group[0], 'user': usertype})
 
         else:
             return render(request, 'group/create_event.html', {'form': form, })
@@ -266,3 +270,19 @@ def exit_group(request, g_id=None, u_id=None):
         instance = GroupMembers.objects.get(user_id_id=u_id.pk, group_id_id=g_id)
         instance.delete()
     return HttpResponseRedirect(reverse('authentication:group:user_groups', args=(request.user.pk,)))
+
+
+@login_required
+def events_location(request):
+    usertype = Usertype.objects.get(user_id=request.user.pk)
+    if usertype.is_user:
+        profile = Profile.objects.get(profile__user_id=usertype.pk)
+        events = Event.objects.filter(location=profile.location)
+        for i in events:
+            print(i.name)
+            print(i.description)
+            print(i.location)
+            print(i.date)
+            print()
+        return render(request, 'group/events_location.html', {'events': events})
+    return HttpResponseRedirect(reverse('authentication:party:party'))

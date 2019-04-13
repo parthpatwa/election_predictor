@@ -14,7 +14,7 @@ def articles_list(request):
     user = request.user
     user_profile = Profile.objects.get(profile__user__username=user)
     user_location = user_profile.location
-    q = user_location
+    q = user_location+'election'
     k = Feed.objects.filter(query__query=q)
     k.delete()
     l = Query.objects.filter(query=q)

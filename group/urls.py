@@ -19,4 +19,5 @@ urlpatterns = [
     path('user_accept/<int:g_id>/<int:u_id>', views.user_accept, name='user_accept'),
     path('user_decline/<int:g_id>/<int:u_id>', views.user_decline, name='user_decline'),
     path('exit_group/<int:g_id>/<int:u_id>', views.exit_group, name='exit_group'),
+    path('events/', views.events_location, name='events_location')
 ]

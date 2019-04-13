@@ -25,7 +25,7 @@ class GroupMembers(models.Model):
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=25, null=False)
+    name = models.CharField(max_length=100, null=False)
     description = models.TextField(max_length=1000)
     location = models.CharField(max_length=100)
     date = models.DateTimeField(default=timezone.now)
@@ -50,3 +50,10 @@ class Arch_Event(models.Model):
 
     class Meta:
         unique_together = ('name', 'group_id')
+
+
+class Event_Forum(models.Model):
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
+    comment = models.TextField()
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
