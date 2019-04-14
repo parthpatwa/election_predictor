@@ -23,6 +23,9 @@ class GroupMembers(models.Model):
     class Meta:
         unique_together = ('group_id', 'user_id')
 
+    def __str__(self):
+        return self.group_id.name
+
 
 class Event(models.Model):
     name = models.CharField(max_length=100, null=False)
@@ -31,7 +34,7 @@ class Event(models.Model):
     date = models.DateTimeField(default=timezone.now)
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -45,8 +48,26 @@ class Arch_Event(models.Model):
     date = models.DateTimeField(default=timezone.now)
     group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
 
     class Meta:
         unique_together = ('name', 'group_id')
+
+
+class EventForum(models.Model):
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
+    comment = models.TextField()
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.event_id.name
+
+
+class EventMembers(models.Model):
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('event_id', 'user_id')
