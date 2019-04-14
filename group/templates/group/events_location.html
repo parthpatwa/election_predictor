@@ -6,8 +6,25 @@
             Name : {{ event.name }}<br>
             Description : {{ event.description }}<br>
             Location : {{ event.location }}<br>
-            date : {{ event.date }}<br>
+            date : {{ event.date }}<br><br><br>
+
+            <form action="{% url 'authentication:group:add_comment' event.id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Post" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">
+            </form>
+
+            {% for comment in comments %}
+                {% if comment.event_id.id == event.id %}
+                    comments:
+                    {{ comment.comment }}<br>
+                    Name: {{ comment.user_id.profile.user.username }}<br>
+                    Time: {{ comment.date }}<br>
+                {% endif %}
+                <br><br>
+            {% endfor %}
             <a href="{% url  'authentication:group:leave_event' event.id %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Leave Event</a><br><br><br><br>
+
 
         {% endfor %}
     {% endif %}
@@ -16,7 +33,16 @@
             Name : {{ event.name }}<br>
             Description : {{ event.description }}<br>
             Location : {{ event.location }}<br>
-            date : {{ event.date }}<br>
+            date : {{ event.date }}<br><br>
+            {% for comment in comments %}
+                {% if comment.event_id.id == event.id %}
+                    comments:
+                    {{ comment.comment }}<br>
+                    Name: {{ comment.user_id.profile.user.username }}<br>
+                    Time: {{ comment.date }}<br>
+                {% endif %}
+                <br><br>
+            {% endfor %}
             <a href="{% url  'authentication:group:join_event' event.id %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Join Event </a><br><br><br><br>
         {% endfor %}
     {% endif %}

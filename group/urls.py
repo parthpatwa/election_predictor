@@ -23,4 +23,5 @@ urlpatterns = [
     path('delete_event/<int:g_id>/<int:event_id>', views.delete_event, name='delete_event'),
     path('join_event/<int:e_id>', views.join_event, name='join_event'),
     path('leave_event/<int:e_id>', views.leave_event, name='leave_event'),
+    path('add_comment/<int:e_id>/', views.add_comment, name='add_comment')
 ]

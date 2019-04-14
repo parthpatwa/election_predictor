@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from group.forms import GroupRegistration, EventRegistration
-from .models import GroupMembers, Group, Event, EventMembers
+from group.forms import GroupRegistration, EventRegistration, Comments
+from .models import GroupMembers, Group, Event, EventMembers, EventForum
 from authentication.models import Profile, Usertype, Party
 from django.db import connection
 
@@ -297,10 +297,13 @@ def events_location(request):
         event_id = []
         for i in event_members:
             event_id.append(i.event_id_id)
-        events_joined = Event.objects.filter(pk__in=event_id, location=profile.location)
-        events_not_joined = Event.objects.filter(location=profile.location).exclude(pk__in=event_id)
+        events_joined = Event.objects.filter(pk__in=event_id, location=profile.location).order_by('-date')
+        events_not_joined = Event.objects.filter(location=profile.location).exclude(pk__in=event_id).order_by('date').reverse()
+        comments = EventForum.objects.all().order_by('-date')
+        form = Comments()
         return render(request, 'group/events_location.html',
-                      {'events_joined': events_joined, 'events_not_joined': events_not_joined})
+                      {'events_joined': events_joined, 'events_not_joined': events_not_joined, 'comments': comments,
+                       'form': form})
     return HttpResponseRedirect(reverse('authentication:party:party'))
 
 
@@ -333,7 +336,7 @@ def join_event(request, e_id):
         usertype = Usertype.objects.get(user_id=request.user.pk)
         if usertype.is_user:
             profile = Profile.objects.get(profile__user_id=usertype.pk)
-            events  = Event.objects.get(pk=e_id)
+            events = Event.objects.get(pk=e_id)
             instance = EventMembers.objects.create(user_id_id=profile.pk, event_id=events)
             instance.save()
             return HttpResponseRedirect(reverse('authentication:group:events_location'))
@@ -350,3 +353,19 @@ def leave_event(request, e_id):
             except:
                 pass
             return HttpResponseRedirect(reverse('authentication:group:events_location'))
+
+
+@login_required
+def add_comment(request, e_id=None):
+    if e_id:
+        if request.method == 'POST':
+            form = Comments(request.POST)
+            if form.is_valid():
+                comment = form.cleaned_data['comment']
+                profile = Profile.objects.get(profile__user=request.user)
+                user_comment = EventForum.objects.create(user_id=profile, comment=comment, event_id_id=e_id)
+                user_comment.save()
+                return HttpResponseRedirect(reverse('authentication:group:events_location'))
+            else:
+                print('Form is invalid')
+
