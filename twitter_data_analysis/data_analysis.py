@@ -35,4 +35,6 @@ def get_stats(complete, name):
     opp_pos = opp_party[opp_party['polarity'] == 'p']
     opp_neg = opp_party[opp_party['polarity'] == 'n']
     opp_name = list(opp_party['party'])[0]
-    return pos_stats,neg_stats, opp_pos, opp_neg, opp_name
+    pos_hash = list(mvpdf['hashtag'])
+    neg_hash = list(mvndf['hashtag'])
+    return pos_stats,neg_stats, opp_pos, opp_neg, opp_name , pos_hash, neg_hash

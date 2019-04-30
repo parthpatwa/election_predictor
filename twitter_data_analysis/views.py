@@ -24,7 +24,7 @@ def stats(request):
         if float(bal) >= 0:
         	name = profile.name
             complete = pd.read_csv('tweets/cleaned_political_tweets.csv')
-            pos_stats,neg_stats, opp_pos_count, opp_neg_count , opp_name = get_stats(complete,name)#send to django
+            pos_stats,neg_stats, opp_pos_count, opp_neg_count , opp_name , pos_hash , neg_hash= get_stats(complete,name)#send to django
             pos_avg_len = pos_stats['avg_text_len']
             neg_avg_len = neg_stats['avg_text_len']
             party_pos_count = pos_stats['count']
@@ -45,7 +45,7 @@ def stats(request):
             neg_words = neg_stats['freq_words']
             context = {'g1':g1_dct,'g2':g2_dct,'g3':g3_dct,'g4':g4_dct,'pos_avg_lev':pos_avg_lev , 
             'profile':profile, 'neg_avg_len' : neg_avg_len, 'pos_words': pos_words, 'neg_words':neg_words
-            'pos_hash':pos_hash , 'neg_hash',neg_hash}
+            'pos_hash':pos_hash , 'neg_hash':neg_hash}
             profile.credits_amount = bal
             profile.save()
             return render(request, 'dataAnalysis/graphs.html', context)
