@@ -1,7 +1,5 @@
 {% extends 'party/base.html' %}
 {% load static %}
-{% load bootstrap %}
-{% load widget_tweaks %}
 
 {% block nav %}
 
@@ -11,14 +9,14 @@
 					<span class="sr-only">(current)</span>
 				</a>
 			</li>
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:group:group_list' request.user.pk %}" style="color:white;padding-left:20px;padding-right: 20px">Groups</a>
 			</li>
             <li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:party:data_analysis' %}" style="color:white;padding-left:20px;padding-right: 20px">Data Analysis</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payment</a>
+				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payments</a>
 			</li>
             <span class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
@@ -30,26 +28,21 @@
             </span>
 		</ul>
 
-
-
 {% endblock %}
 
 {% block content %}
-    <div style="padding-bottom: 380px;margin-left: 100px">
 
-    <span class="login100-form-title p-t-100 p-b-10" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">
-        Add Members
-    </span>
-        <p style="text-align: center; padding-bottom: 30px ">Click on '+' to invite a user as a group member.</p>
-    {% if members %}
-        {% for member in members %}
-            <div style="padding: 3px;float:left">
-            <div class="chip">
-              <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
-                {{ member.first_name}}&nbsp;{{ member.last_name }} &nbsp;&nbsp;<a href="{% url 'authentication:group:request_member' g_id member.pk %}"><i style="font-size:17px" class="fa">&#xf067;</i></a>
-            </div></div>
-        {% endfor %}
-    {% endif %}
+        <div style="padding-top: 100px;"><center>
+        <span class="login100-form-title p-b-20" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Batch Predict</span>
+        <p style="font-size: 14px">You require '200' credits to use this functionality</p><br>
+        <p style="font-size: 17px">Your Credits : {{ profile.credit_amount }}</p><br></center>
+        <form method="post" enctype="multipart/form-data" style="margin-left: 200px">
+          {% csrf_token %}
+          <div style="font-size: 14px">Upload a File :<br><br>
+          <input type="file" name="fileupload"><br>
+          <input type="submit" value="submit" class="btn btn-primary" style="padding: 7px 15px 7px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);"></div>
+        </form>
+        <div style="font-size: 13px;margin-left: 200px;padding: 40px 0px 160px">Result : <span style="font-size: 17px;text-transform: uppercase">{{ result }}</span></div>
+        </div>
 
-    </div>
 {% endblock %}

@@ -1,9 +1,17 @@
 {% extends 'party/base.html' %}
 {% load static %}
-{% load bootstrap %}
-{% load widget_tweaks %}
 
 {% block nav %}
+<style>
+    textarea{
+        padding: 20px;
+        font-size: 15px;
+        overflow: hidden;
+        background-color: whitesmoke;
+        border-radius: 10px;
+    }
+
+</style>
 
   		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
@@ -11,7 +19,7 @@
 					<span class="sr-only">(current)</span>
 				</a>
 			</li>
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:group:group_list' request.user.pk %}" style="color:white;padding-left:20px;padding-right: 20px">Groups</a>
 			</li>
             <li class="nav-item">
@@ -30,26 +38,23 @@
             </span>
 		</ul>
 
-
-
 {% endblock %}
 
+
 {% block content %}
-    <div style="padding-bottom: 380px;margin-left: 100px">
 
-    <span class="login100-form-title p-t-100 p-b-10" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">
-        Add Members
-    </span>
-        <p style="text-align: center; padding-bottom: 30px ">Click on '+' to invite a user as a group member.</p>
-    {% if members %}
-        {% for member in members %}
-            <div style="padding: 3px;float:left">
-            <div class="chip">
-              <img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="96" height="96">
-                {{ member.first_name}}&nbsp;{{ member.last_name }} &nbsp;&nbsp;<a href="{% url 'authentication:group:request_member' g_id member.pk %}"><i style="font-size:17px" class="fa">&#xf067;</i></a>
-            </div></div>
-        {% endfor %}
-    {% endif %}
 
-    </div>
+<center>
+    <div style="padding-top: 100px;">
+    <span class="login100-form-title p-b-20" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Single Predict</span>
+    <form method="post">
+      {% csrf_token %}
+      <p style="font-size: 14px">Enter your Review :</p><br><br>
+      <textarea rows="13" cols="120" name="review" placeholder="{{ review_ph }}"></textarea><br>
+      <br><input type="submit" value="Submit" class="btn btn-primary" style="padding: 10px 20px 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">
+    </form><br>
+    <div style="font-size: 13px;text-align: left;margin-left: 200px">Result : <span style="font-size: 17px;text-transform: uppercase">{{ result }}</span></div><br><br><br><br>
+    <span style="font-size: 14px;padding-top: 100px">Go to batch predictor here -> </span><a href="{% url 'authentication:party:sentimentanalysis:sentiment_analysis_batch' %}"><input type="button" value="Batch Predictor" class="btn btn-primary" style="padding: 7px 15px 7px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);"></a>
+    </div><br><br><br>
+</center>
 {% endblock %}
