@@ -33,18 +33,13 @@
 
 
 {% block content %}
-
-      <div class="container1" style="margin:120px 0px 40px 0px; ">
-
-  </div>
-
-
-  <div class="">
-    <center><p style="font-size:40px; color:black">{{ party.name }}</p></center>
-  </div>
-
-  <div class="" style="margin: 20px 100px 50px 100px; padding-bottom: 250px">
-    <center><p>{{ party.description }}</p></center>
-  </div>
-
+    <br><br><br><br><br>
+    {{ result }}
+    <a href="{% url 'authentication:party:sentimentanalysis:sentiment_analysis_batch' %}"><input type="button" value="Batch Predictor" class="btn btn-primary"></a><br><br>
+    <form method="post">
+    {% csrf_token %}
+    Enter your review:
+    <textarea name="review" rows="5" cols="100" placeholder="{{ review_ph }}"></textarea><br><br>
+    <input type="submit" value="submit" class="btn btn-primary">
+    </form>
 {% endblock %}
