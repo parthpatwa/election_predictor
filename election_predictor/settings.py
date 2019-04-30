@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'election_predictordb',
         'USER': 'root',
-        'PASSWORD': 'mysqlroot',
+        'PASSWORD': 'jitesh123',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -129,7 +129,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
 LOGIN_URL = 'authentication:login_user'
 
 EMAIL_USE_TLS = True
