@@ -87,11 +87,3 @@ def decrease_credits(request, amount=None):
             else:
                 error = 'You don\'t have enough credits'
                 return render(request, 'party/data_analysis.html', {'profile': profile, 'error': error})
-
-
-def sentiment_analysis_single(request):
-    pass
-
-
-def sentiment_analysis_batch(request):
-    pass
