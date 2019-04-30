@@ -11,11 +11,19 @@ from authentication.forms import Registration, PartyRegistration, CreateProfile,
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-
 from authentication.models import Profile, Party
 from authentication.tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.db import connection
+from geopy.geocoders import Nominatim
+import requests
+
+
+def get_loc(request):
+    geolocator = Nominatim()
+    location = geolocator.reverse("13.5564566,80.0260351")
+    temp = location.address
+    return HttpResponse(location.address)
 
 
 # trig_executed = False

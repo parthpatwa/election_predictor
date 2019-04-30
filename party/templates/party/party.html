@@ -24,7 +24,7 @@
 				<a class="nav-link" href="{% url 'authentication:party:data_analysis' %}" style="color:white;padding-left:20px;padding-right: 20px">Data Analysis</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payment</a>
+				<a class="nav-link" href="{% url 'authentication:party:payment_details' %}" style="color:white;padding-left:20px;padding-right: 20px">Payment</a>
 			</li>
 		</ul>
 
@@ -38,9 +38,9 @@
 
   </div>
 
-
   <div class="">
     <center><p style="font-size:40px; color:black">{{ party.name }}</p></center>
+  <h4>Your credits:{{ party.credit_amount }}</h4>
   </div>
 
   <div class="" style="margin: 20px 100px 50px 100px; padding-bottom: 250px">
