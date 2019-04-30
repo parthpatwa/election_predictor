@@ -36,7 +36,6 @@
         <div style="color: red">{{ error }}</div>
     {% endif %}
     Your Credits:{{ profile.credit_amount }}<br><br>
-    <a href="{% url 'authentication:party:decrease_credits' 50 %}"><input type="button" class="btn-primary" value="1st button"></a><br><br>
-    <a href="{% url 'authentication:party:decrease_credits' 100%}"><input type="button" class="btn-primary" value="2st button"></a><br><br>
-    <a href="{% url 'authentication:party:decrease_credits' 200%}"><input type="button" class="btn-primary" value="3st button"></a><br><br>
+    <h4>It costs 200 credits</h4><a href="{% url 'authentication:party:dataanalysis:stats' %}"><input type="button" class="btn-primary" value="Polarity Analysis"></a><br><br>
+    <a href="#"><input type="button" class="btn-primary" value="2st button"></a><br><br>
 {% endblock %}
