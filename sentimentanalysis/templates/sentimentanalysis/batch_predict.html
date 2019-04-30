@@ -33,18 +33,14 @@
 
 
 {% block content %}
-
-      <div class="container1" style="margin:120px 0px 40px 0px; ">
-
-  </div>
-
-
-  <div class="">
-    <center><p style="font-size:40px; color:black">{{ party.name }}</p></center>
-  </div>
-
-  <div class="" style="margin: 20px 100px 50px 100px; padding-bottom: 250px">
-    <center><p>{{ party.description }}</p></center>
-  </div>
-
+    <br><br><br><br><br>
+    Your credits:{{ profile.credit_amount }}
+    <h4>You need 200 credits to use this functionality</h4><br><br>
+    <h5>{{ result }}</h5><br>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    Upload a file:
+    <input type="file" name="fileupload"><br><br>
+    <input type="submit" value="submit" class="btn btn-primary">
+    </form>
 {% endblock %}
