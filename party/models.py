@@ -1,3 +1,12 @@
 from django.db import models
+from authentication.models import Party
 
-# Create your models here.
+
+class PaymentDetails(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE)
+    transaction_id = models.CharField(max_length=100, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    amount = models.FloatField(null=True)
+
+    def __str__(self):
+        return self.transaction_id
