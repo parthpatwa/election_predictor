@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'party',
     'bootstrapform',
     'widget_tweaks',
-    'twitter_data_analysis'
+    'twitter_data_analysis',
+    'sentimentanalysis'
 ]
 
 MIDDLEWARE = [

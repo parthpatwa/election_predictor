@@ -33,18 +33,12 @@
 
 
 {% block content %}
-
-      <div class="container1" style="margin:120px 0px 40px 0px; ">
-
-  </div>
-
-
-  <div class="">
-    <center><p style="font-size:40px; color:black">{{ party.name }}</p></center>
-  </div>
-
-  <div class="" style="margin: 20px 100px 50px 100px; padding-bottom: 250px">
-    <center><p>{{ party.description }}</p></center>
-  </div>
-
+    <br><br><br><br><br><br><br><br>
+    {% if error %}
+        <div style="color: red">{{ error }}</div>
+    {% endif %}
+    Your Credits:{{ profile.credit_amount }}<br><br>
+    <a href="{% url 'authentication:party:decrease_credits' 50 %}"><input type="button" class="btn-primary" value="1st button"></a><br><br>
+    <a href="{% url 'authentication:party:decrease_credits' 100%}"><input type="button" class="btn-primary" value="2st button"></a><br><br>
+    <a href="{% url 'authentication:party:decrease_credits' 200%}"><input type="button" class="btn-primary" value="3st button"></a><br><br>
 {% endblock %}
