@@ -44,7 +44,8 @@ def stats(request):
             pos_words = pos_stats['freq_words']
             neg_words = neg_stats['freq_words']
             context = {'g1':g1_dct,'g2':g2_dct,'g3':g3_dct,'g4':g4_dct,'pos_avg_lev':pos_avg_lev , 
-            'profile':profile, 'neg_avg_len' : neg_avg_len, 'pos_words': pos_words, 'neg_words':neg_words}
+            'profile':profile, 'neg_avg_len' : neg_avg_len, 'pos_words': pos_words, 'neg_words':neg_words
+            'pos_hash':pos_hash , 'neg_hash',neg_hash}
             profile.credits_amount = bal
             profile.save()
             return render(request, 'dataAnalysis/graphs.html', context)
