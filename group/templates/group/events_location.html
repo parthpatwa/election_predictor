@@ -3,6 +3,11 @@
 {% load widget_tweaks %}
 {% block content %}
     <div style="margin: 100px">
+    <form method="post">
+        {% csrf_token %}
+    Search events by location:<input type="text" {% if requested %} value="{{ location }}" {% else %} value="" {% endif %} name="location">
+        <input type="submit">
+    </form>
     {% if events_joined %}
       <span class="login100-form-title p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Enrolled Events</span>
 
@@ -56,10 +61,12 @@
         {% endfor %}
     {% endif %}
 
-
-    {% if events_not_joined %}
+    {% if requested %}
+        <span class="login100-form-title p-t-40 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Events near {{ location }}</span>
+    {% else %}
         <span class="login100-form-title p-t-40 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Nearby Events</span>
-
+    {% endif %}
+    {% if events_not_joined %}
         {% for event in events_not_joined %}
             <div class="container">
                <div class="card" style="max-width:1200px">

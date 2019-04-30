@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from group.forms import GroupRegistration, EventRegistration, Comments
+from group.forms import GroupRegistration, EventRegistration, Comments, Get_Location
 from .models import GroupMembers, Group, Event, EventMembers, EventForum
 from authentication.models import Profile, Usertype, Party
 from django.db import connection
@@ -290,6 +290,8 @@ def exit_group(request, g_id=None, u_id=None):
 
 @login_required
 def events_location(request):
+    requested = False
+    get_location = Get_Location()
     usertype = Usertype.objects.get(user_id=request.user.pk)
     if usertype.is_user:
         profile = Profile.objects.get(profile__user_id=usertype.pk)
@@ -297,13 +299,20 @@ def events_location(request):
         event_id = []
         for i in event_members:
             event_id.append(i.event_id_id)
-        events_joined = Event.objects.filter(pk__in=event_id, location=profile.location).order_by('-date')
-        events_not_joined = Event.objects.filter(location=profile.location).exclude(pk__in=event_id).order_by('date').reverse()
+        if request.method == 'POST':
+            form = Get_Location(request.POST)
+            if form.is_valid():
+                location = form.cleaned_data['location']
+                requested = True
+        else:
+            location = profile.location
+        events_joined = Event.objects.filter(pk__in=event_id).order_by('-date')
+        events_not_joined = Event.objects.filter(location=location).exclude(pk__in=event_id).order_by('date').reverse()
         comments = EventForum.objects.all().order_by('-date')
         form = Comments()
         return render(request, 'group/events_location.html',
                       {'events_joined': events_joined, 'events_not_joined': events_not_joined, 'comments': comments,
-                       'form': form})
+                       'form': form, 'get_location': get_location, 'location': location, 'requested': requested})
     return HttpResponseRedirect(reverse('authentication:party:party'))
 
 
@@ -368,4 +377,3 @@ def add_comment(request, e_id=None):
                 return HttpResponseRedirect(reverse('authentication:group:events_location'))
             else:
                 print('Form is invalid')
-

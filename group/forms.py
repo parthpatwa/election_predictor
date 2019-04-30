@@ -18,3 +18,7 @@ class Comments(forms.ModelForm):
     class Meta:
         model = EventForum
         fields = ['comment']
+
+
+class Get_Location(forms.Form):
+    location = forms.CharField(max_length=50)
