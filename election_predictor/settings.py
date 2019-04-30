@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'election_predictordb',
         'USER': 'root',
-        'PASSWORD': 'iiits@123',
+        'PASSWORD': 'mysqlroot',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -134,7 +134,7 @@ LOGIN_URL = 'authentication:login_user'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'jiteshmalipeddi92@gmail.com'
-EMAIL_HOST_PASSWORD = 'Ilovemyparents'
+EMAIL_HOST_USER = 'csa.ase1@gmail.com'
+EMAIL_HOST_PASSWORD = 'user-group8'
 EMAIL_PORT = 587
 

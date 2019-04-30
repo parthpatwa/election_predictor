@@ -11,42 +11,34 @@
 	<link href="https://fonts.googleapis.com/css?family=Allura" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:400,600|Roboto" rel="stylesheet">
 
-
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/js/mdb.min.js"></script>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 
 	<link rel="icon" type="image/png" href="{% static 'authentication/images/icons/favicon.ico' %}"/>
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/bootstrap/css/bootstrap.min.css' %}">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/fonts/iconic/css/material-design-iconic-font.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/animate/animate.css' %}">
-<!--===============================================================================================-->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/animate/animate.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/css-hamburgers/hamburgers.min.css' %}">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/animsition/css/animsition.min.css' %}">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/select2/select2.min.css' %}">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/vendor/daterangepicker/daterangepicker.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/util.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'authentication/css/util.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'authentication/css/main.css' %}">
 
     <style>
-        .chip {
+    .chip {
       display: inline-block;
       padding: 0 25px;
       height: 50px;
@@ -63,11 +55,49 @@
       width: 50px;
       border-radius: 50%;
     }
+
+    .accordion {
+      background-color: #eee;
+      color: #444;
+      cursor: pointer;
+      padding: 15px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      transition: 0.4s;
+    }
+
+    .active, .accordion:hover {
+      background-color: #ccc;
+    }
+
+    .panel {
+      padding: 0 18px;
+      background-color: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
+
+    th, td {
+        padding: 5px 20px 5px;
+    }
+
+    textarea{
+        padding: 20px;
+        font-size: 15px;
+        overflow: hidden;
+        background-color: whitesmoke;
+        border-radius: 10px;
+    }
+
     </style>
 
 </head>
 
-<body background="{% static 'authentication/images/middle-cover.jpg' %}">
+<body background="{% static 'authentication/images/middle-cover.jpg' %}" style="background-attachment: fixed;">
 
 <nav class="navbar fixed-top navbar-expand-lg py-1 mb-md-0 mb-4 z-depth-1" style="background: -webkit-linear-gradient(left, #3c96ff 0%, #2dfbff 100%) !important;
 background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; color:white;">
@@ -86,7 +116,7 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 
 		<!-- Links -->
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:news_items:articles_list' %}" style="color:white;padding-left:50px;">Home
 					<span class="sr-only">(current)</span>
 				</a>
@@ -99,6 +129,9 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 			</li>
             <li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:news_items:feed_new' %}" style="color:white;padding-left:25px">Search</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link" href="{% url 'authentication:group:events_location' %}" style="color:white;padding-left:25px">Events</a>
 			</li>
 		</ul>
 
@@ -236,6 +269,23 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
 		$(document).ready(function(){
 		  $(".dropdown-toggle").dropdown();
 		});
+
+
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight){
+                  panel.style.maxHeight = null;
+                } else {
+                  panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+              });
+            }
+
 		</script>
 
 <!--===============================================================================================-->

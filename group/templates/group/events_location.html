@@ -1,0 +1,118 @@
+{% extends 'news_items/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+    <div style="margin: 100px">
+    <form method="post">
+        {% csrf_token %}
+    Search events by location:<input type="text" {% if requested %} value="{{ location }}" {% else %} value="" {% endif %} name="location">
+        <input type="submit">
+    </form>
+    {% if events_joined %}
+      <span class="login100-form-title p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Enrolled Events</span>
+
+        {% for event in events_joined %}
+            <div class="container">
+               <div class="card" style="max-width:1200px">
+                  <div class="card-body" style="padding: 30px">
+                    <h1 class="card-title" style="font-weight: bold">{{ event.name }}</h1>
+                    <p class="card-text" style="font-size: 16px;" >{{ event.description }}</p>
+                    <p class="card-text" style="font-size: 15px;" >Location : <span style="font-size: 18px">{{ event.location }}</span></p>
+                    <p class="card-text" style="font-size: 15px;" >Date : <span style="font-size: 18px">{{ event.date }}</span></p>
+                    <br>
+                    <a href="{% url  'authentication:group:leave_event' event.id %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Leave Event</a>
+                  </div>
+
+               <div style="margin: 5px 20px 10px">
+                  <button class="accordion" style="border-radius: 10px">Comments <i class="fas fa-angle-down rotate-icon"></i></button>
+                    <div class="panel">
+                        <hr>
+                        <form action="{% url 'authentication:group:add_comment' event.id %}" method="post">
+                        {% csrf_token %}
+                            <center><span style="font-size: 14px">Add a comment :</span><br><br>
+                            <textarea rows="5" cols="120" name="comment"></textarea><br>
+                            <br><input type="submit" value="Post" class="btn btn-primary" style="padding: 10px 20px 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);"></center>
+                        </form><br>
+                    <hr>
+                        <br>
+                        <table style="width:100%" >
+                          {% for comment in comments %}
+                             {% if comment.event_id.id == event.id %}
+                                <tr>
+                                  <td rowspan="2"><img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="46" height="46"></td>
+                                  <td  style="font-size: 14px">{{ comment.user_id.profile.user.username }}</td>
+                                  <td style="font-size: 12px;text-align:right;padding-right: 30px;">{{ comment.date }}</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="font-size: 13px;padding-bottom: 20px">{{ comment.comment }}</td>
+                                </tr>
+                             {% endif %}
+                          {% endfor %}
+                        </table>
+
+
+                    </div>
+               </div>
+
+               </div>
+            </div>
+            <br><br>
+
+        {% endfor %}
+    {% endif %}
+
+    {% if requested %}
+        <span class="login100-form-title p-t-40 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Events near {{ location }}</span>
+    {% else %}
+        <span class="login100-form-title p-t-40 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Nearby Events</span>
+    {% endif %}
+    {% if events_not_joined %}
+        {% for event in events_not_joined %}
+            <div class="container">
+               <div class="card" style="max-width:1200px">
+                  <div class="card-body" style="padding: 30px">
+                    <h1 class="card-title" style="font-weight: bold">{{ event.name }}</h1>
+                    <p class="card-text" style="font-size: 16px;" >{{ event.description }}</p>
+                    <p class="card-text" style="font-size: 15px;" >Location : <span style="font-size: 18px">{{ event.location }}</span></p>
+                    <p class="card-text" style="font-size: 15px;" >Date : <span style="font-size: 18px">{{ event.date }}</span></p>
+                    <br>
+                    <a href="{% url  'authentication:group:join_event' event.id %}" class="btn btn-primary" style="padding: 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);">Join Event </a>
+                  </div>
+
+               <div style="margin: 5px 20px 10px">
+                  <button class="accordion" style="border-radius: 10px">Comments <i class="fas fa-angle-down rotate-icon"></i></button>
+                    <div class="panel">
+                        <hr>
+                        <form action="{% url 'authentication:group:add_comment' event.id %}" method="post">
+                        {% csrf_token %}
+                            <center><span style="font-size: 14px">Add a comment :</span><br><br>
+                            <textarea rows="5" cols="130" name="comment" style="font-size: 15px;overflow: hidden;background-color: whitesmoke; border-radius: 10px"></textarea><br>
+                            <br><input type="submit" value="Post" class="btn btn-primary" style="padding: 10px 20px 10px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);"></center>
+                        </form><br>
+                    <hr>
+                        <br>
+                        <table style="width:100%" >
+                          {% for comment in comments %}
+                             {% if comment.event_id.id == event.id %}
+                                <tr>
+                                  <td rowspan="2"><img src="{% static 'authentication/images/img_avatar1.png' %}" alt="Person" width="46" height="46"></td>
+                                  <td  style="font-size: 14px">{{ comment.user_id.profile.user.username }}</td>
+                                  <td style="font-size: 12px;text-align:right;padding-right: 30px;">{{ comment.date }}</td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="font-size: 13px;padding-bottom: 20px">{{ comment.comment }}</td>
+                                </tr>
+                             {% endif %}
+                          {% endfor %}
+                        </table>
+
+
+                    </div>
+               </div>
+
+               </div>
+            </div><br><br>
+        {% endfor %}
+    {% endif %}
+    </div>
+{% endblock %}
