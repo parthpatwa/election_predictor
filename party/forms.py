@@ -24,7 +24,7 @@ class VerifyPayment(forms.Form):
 class PaymentsForm(forms.ModelForm):
     card_number = forms.IntegerField(validators=[card_number_validate])
     card_name = forms.CharField(max_length=1000)
-    cvv = forms.CharField(widget=forms.PasswordInput(), validators=[cvv_validate])
+    cvv = forms.IntegerField(widget=forms.PasswordInput(), validators=[cvv_validate])
 
     class Meta:
         model = PaymentDetails

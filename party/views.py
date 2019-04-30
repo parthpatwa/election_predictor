@@ -43,6 +43,7 @@ def verify_payment(request, key, credit):
 @login_required
 def payment_details(request):
     form = PaymentsForm()
+    party = Party.objects.get(party__user__exact=request.user)
     if request.method == 'POST':
         form = PaymentsForm(request.POST)
         if form.is_valid():
@@ -65,7 +66,7 @@ def payment_details(request):
             messages.info(request, "Thank you! Your purchase was successful!")
             return HttpResponseRedirect(reverse('authentication:party:verify_payment', args=(key, int(credits))))
 
-    return render(request, 'party/payment_details.html', {'form': form})
+    return render(request, 'party/payment_details.html', {'form': form,'credit':party.credit_amount})
 
 
 def data_analysis(request):
