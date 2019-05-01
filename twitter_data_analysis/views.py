@@ -32,7 +32,6 @@ def stats(request):
                 p = 'p'
                 n = 'n'
                 g1_x = [p, n]
-                print(g1_x)
                 g2_y = [party_pos_count, opp_pos_count]
                 g2_x = [name, opp_name]
                 g3_y = [party_neg_count, opp_neg_count]
@@ -42,7 +41,6 @@ def stats(request):
                 pos_words = pos_stats['freq_words']
                 neg_words = neg_stats['freq_words']
                 lead = party_pos_count - party_neg_count - opp_pos_count + opp_neg_count
-                #print("len_nev",neg_avg_len)
                 context = {'g1_x': g1_x, 'g1_y': g1_y, 'g2_x': g2_x, 'g2_y': g2_y, 'g3_x': g3_x, 'g3_y': g3_y, 'g4_x': g4_x,
                            'g4_y': g4_y, 'pos_avg_lev': pos_avg_len,
                            'profile': profile, 'neg_avg_len': neg_avg_len, 'pos_words': pos_words,
