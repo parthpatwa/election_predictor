@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-
+from location_dataanalysis import get_stats_for_location
 from .data_analysis import get_stats
 import pandas as pd
 from authentication.models import Usertype, Party
