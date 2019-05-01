@@ -37,5 +37,17 @@
     {% endif %}
     Your Credits:{{ profile.credit_amount }}<br><br>
     <h4>It costs 200 credits</h4><a href="{% url 'authentication:party:dataanalysis:stats' %}"><input type="button" class="btn-primary" value="Polarity Analysis"></a><br><br>
-    <a href="#"><input type="button" class="btn-primary" value="2st button"></a><br><br>
+    <form method="post">
+    {% csrf_token %}
+        <h4>It costs 50 credits</h4>Select a city to get analysis:
+        <select name="location">
+          <option value="mumbai">Mumbai</option>
+          <option value="pune">Pune</option>
+          <option value="delhi">Delhi</option>
+          <option value="chennai">Chennai</option>
+            <option value="hyderabad">Hyderabad</option>
+        </select>
+    <a href="{% url 'authentication:party:data_analysis' %}"><input type="submit" class="btn-primary" value="location analysis"></a><br><br>
+    </form>
+
 {% endblock %}
