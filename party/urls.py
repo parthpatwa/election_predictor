@@ -9,4 +9,5 @@ urlpatterns = [
     path('verify_payment/<str:key>/<int:credit>/', views.verify_payment, name='verify_payment'),
     path('add_payment_details/', views.payment_details, name='payment_details'),
     path('sentimentanalysis/', include('sentimentanalysis.urls')),
+    path('data_analysis/', include('twitter_data_analysis.urls')),
 ]

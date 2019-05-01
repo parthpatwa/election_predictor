@@ -17,14 +17,15 @@ def get_most_frequent(n,lst):
     wordcount = list(pd.Series(' '.join(lst).split()).value_counts()[:n].keys())
     return wordcount
 def get_most_important(n,lst):
-    tfidf = TfidfVectorizer(stop_words='english', max_features = n)
+    tfidf = TfidfVectorizer(stop_words='english')
     tf =  tfidf.fit_transform(lst)
-    feature_array = tfidf.get_feature_names()
-    return list(feature_array)
+    feature_array = np.array(tfidf.get_feature_names())
+    tfidf_sorting = np.argsort(tf.toarray()).flatten()[::-1]
+    top_n = feature_array[tfidf_sorting][:n]
+    return list(top_n)
 def get_stats_for_df(dataF):
     reviews, avg = get_len_min_max_mean(dataF['text length'])#send to django
-    dataF = dataF.drop_duplicates(subset = ['tweet'])
-    wc = get_most_important(50,dataF['tweet'])#send to django
+    wc = get_most_frequent(50,dataF['tweet'])#send to django
     df_stats = {'count':reviews,'avg_text_len':avg,'freq_words' : wc}
     return dict(df_stats)
 

@@ -158,6 +158,13 @@ background: linear-gradient(to right, #3c96ff 0%, #2dfbff 100%) !important; colo
             {% block nav %}
 
             {% endblock %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'authentication:news_items:feeds_list' %}" style="color:white;padding-left:25px">News Feed</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'authentication:news_items:saved_queries' %}" style="color:white;padding-left:25px">Saved Searches</a>
+            </li>
 		</ul>
 
 

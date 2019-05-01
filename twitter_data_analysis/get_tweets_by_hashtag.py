@@ -12,10 +12,10 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 print('authed')
 api = tweepy.API(auth)
-places = api.geo_search(query=city)
-place_id = places[0].id
-coords=(places[0].bounding_box.coordinates)[0]
-location=coords[0]+coords[2]
+#places = api.geo_search(query=city)
+#place_id = places[0].id
+#coords=(places[0].bounding_box.coordinates)[0]
+#location=coords[0]+coords[2]
 
 
 #Cursor implementation
