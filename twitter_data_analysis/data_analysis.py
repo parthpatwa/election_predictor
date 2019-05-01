@@ -30,6 +30,8 @@ def get_stats_for_df(dataF, col = 'tweet'):
 
 
 def get_stats(complete, name):
+    complete = complete.dropna()
+    print(complete['party'].nunique)
     complete['text length'] = complete['tweet'].apply(len)
     opp_party = complete[complete['party'] != name]
     party = complete[complete['party'] == name]
@@ -38,6 +40,8 @@ def get_stats(complete, name):
     mvndf = mvdf[mvdf['polarity'] == 'n']
     pos_stats = get_stats_for_df(mvpdf)
     neg_stats = get_stats_for_df(mvndf)
+    print(opp_party.head())
+    print(len(opp_party))
     opp_pos = len(opp_party[opp_party['polarity'] == 'p'])
     opp_neg = len(opp_party[opp_party['polarity'] == 'n'])
     opp_name = list(opp_party['party'])[0]
