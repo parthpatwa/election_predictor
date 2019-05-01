@@ -10,3 +10,11 @@ class PaymentDetails(models.Model):
 
     def __str__(self):
         return self.transaction_id
+
+
+class SecretKey(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE,primary_key=True)
+    sk = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return self.sk
