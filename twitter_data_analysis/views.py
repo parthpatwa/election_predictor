@@ -52,8 +52,8 @@ def stats(request):
                 profile.save()
                 return render(request, 'twitter_data_analysis/stats.html', context)
             else:
-                return HttpResponse(
-                    '<html><head><script>alert("You dont have sufficient funds");window.location="/data_analysis";</script></head></html>')
+                return render(request, 'party/data_analysis.html',
+                              {'profile': profile, 'error': 'You don\'t have enough credits'})
         else:
             return render(request, 'party/data_analysis.html', {'profile': profile, 'error': 'Your party name is bjp or congress'})
 
