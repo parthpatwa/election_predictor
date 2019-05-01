@@ -12,11 +12,11 @@
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:group:group_list' request.user.pk %}" style="color:white;padding-left:20px;padding-right: 20px">Groups</a>
 			</li>
-            <li class="nav-item">
+            <li class="nav-item active">
 				<a class="nav-link" href="{% url 'authentication:party:data_analysis' %}" style="color:white;padding-left:20px;padding-right: 20px">Data Analysis</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payment</a>
+				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payments</a>
 			</li>
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
@@ -34,7 +34,7 @@
 
 {% block content %}
     <div style="padding: 100px 100px 0px;background-color: white">
-        <span class="login100-form-title p-b-20" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Data Analysis</span>
+        <span class="login100-form-title p-b-20" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Polarity Analysis</span>
         <p style="font-size: 14px">Average positive tweet length : <span style="font-size: 16px;font-weight: bold">{{ pos_avg_lev }}</span></p><br>
         <p style="font-size: 14px">Popular positive hash tags : <span style="font-size: 16px;font-weight: bold">{{ pos_hash }}</span></p><br>
         <p style="font-size: 14px">Positive key words : <span style="font-size: 16px;font-weight: bold">{{ pos_words }}</span></p><br><br><br>
@@ -47,7 +47,7 @@
         <p style="font-size: 16px;font-weight:bold">Positive vs Negative</p><div id="g1" class="p-b-70"></div>
         <p style="font-size: 16px;font-weight:bold">Party wise Positive</span><div id="g2" class="p-b-70"></div>
         <p style="font-size: 16px;font-weight:bold">Party wise Negative</p><br><div id="g3" class="p-b-70"></div>
-        <p style="font-size: 16px;font-weight:bold">Party Total Share</p><br><div id="g4"></div>
+        <p style="font-size: 16px;font-weight:bold">Party wise Total Share</p><br><div id="g4"></div>
         </center>
     </div>
 

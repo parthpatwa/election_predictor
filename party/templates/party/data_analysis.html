@@ -31,11 +31,26 @@
 {% endblock %}
 
 {% block content %}
-    <br><br><br><br><br><br><br><br>
-    {% if error %}
-        <div style="color: red">{{ error }}</div>
-    {% endif %}
-    Your Credits:{{ profile.credit_amount }}<br><br>
-    <h4>It costs 200 credits</h4><a href="{% url 'authentication:party:dataanalysis:stats' %}"><input type="button" class="btn-primary" value="Polarity Analysis"></a><br><br>
-    <a href="#"><input type="button" class="btn-primary" value="2st button"></a><br><br>
+<div style="padding: 100px 150px 80px;background-color: white">
+    <span class="login100-form-title p-b-20" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Data Analysis</span>
+        {% if error %}
+            <div style="color: red">{{ error }}</div>
+        {% endif %}
+        <p style="font-size: 15px">Your Credits : <span style="font-size: 20px;font-weight: bold">{{ profile.credit_amount }}</span></p><br>
+        <p style="font-size: 15px;">It costs 200 credits</p><a href="{% url 'authentication:party:dataanalysis:stats' %}"><input type="button" class="btn btn-primary" value="Polarity Analysis"></a>
+        <br><br><br><br>
+        <form method="post">
+        {% csrf_token %}
+            <p style="font-size: 15px">It costs 50 credits</p>
+            <span style="font-size: 15px">Select a city to get analysis : </span>
+            <select name="location" style="font-size: 15px">
+              <option value="mumbai">Mumbai</option>
+              <option value="pune">Pune</option>
+              <option value="delhi">Delhi</option>
+              <option value="chennai">Chennai</option>
+                <option value="hyderabad">Hyderabad</option>
+            </select><br><br>
+        <a href="{% url 'authentication:party:data_analysis' %}"><input type="submit" class="btn btn-primary" value="location analysis"></a><br><br>
+        </form>
+</div>
 {% endblock %}

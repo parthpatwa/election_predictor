@@ -21,10 +21,10 @@ def get_most_important(n,lst):
     tf =  tfidf.fit_transform(lst)
     feature_array = tfidf.get_feature_names()
     return list(feature_array)
-def get_stats_for_df(dataF):
+def get_stats_for_df(dataF, col = 'tweet'):
     reviews, avg = get_len_min_max_mean(dataF['text length'])#send to django
-    dataF = dataF.drop_duplicates(subset = ['tweet'])
-    wc = get_most_important(50,dataF['tweet'])#send to django
+    dataF = dataF.drop_duplicates(subset = [col])
+    wc = get_most_important(50,dataF[col])#send to django
     df_stats = {'count':reviews,'avg_text_len':avg,'freq_words' : wc}
     return dict(df_stats)
 

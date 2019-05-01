@@ -73,6 +73,9 @@ def data_analysis(request):
     usertype = Usertype.objects.get(user_id=request.user.pk)
     if usertype.is_party:
         profile = Party.objects.get(party__user_id=usertype.pk)
+        if request.method == 'POST':
+            location = request.POST['location']
+            return HttpResponseRedirect(reverse('authentication:party:dataanalysis:polarity_analysis_location', args=(location,)))
         return render(request, 'party/data_analysis.html', {'profile': profile})
 
 
