@@ -159,30 +159,27 @@
             </div>
         </nav>
         
+        
         <div style="background-image: url({% static 'authentication/images/middle-cover.jpg' %})">
-            <span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:35px;">
-                Saved Searches
-            </span>
             
+            <span class="login100-form-title p-t-100 p-b-30" style="background: -webkit-linear-gradient(45deg, #2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:35px;">
+                News Feed
+            </span>
             
             <div class="container">
                 
-                <div>
-                    {% for row in savedqps %}
-                    <form method="POST" action="{% url 'authentication:news_items:saved_queries' %}">
-                        {% csrf_token %}
-                        
-                        <span style="font-size: large">{{row.0}}</span>
-                        <button class="btn btn-primary" name="delete" type="submit" value="{{ row.0 }}">
-                            <h2>{{row.query}}</h2>
-                            <button class="btn btn-primary" name="delete" type="submit" value="{{ row.query }}">
-                                Delete
-                            </button>
-                            </form><br>
+                {% for row in rows %}
+                <div class="col-md-6">
+                    {% for entry in row %}
+                    <h2>{{entry.title}}</h2>
+                    <p>{{entry.description | safe}}</p>
+                    <p><a href="{{entry.url}}" target="_blank" class="btn btn-primary">View Details</a></p><br>
                     {% endfor %}
                 </div>
+                {% endfor %}
             </div>
-        </div>
+        </div><!-- /container -->
+        
 
         
         <!-- Footer -->

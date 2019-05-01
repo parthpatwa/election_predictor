@@ -1,5 +1,6 @@
 from django.urls import path
 from group import views
+from .views import ListEventView
 
 app_name = 'group'
 urlpatterns = [
@@ -24,4 +25,5 @@ urlpatterns = [
     path('join_event/<int:e_id>', views.join_event, name='join_event'),
     path('leave_event/<int:e_id>', views.leave_event, name='leave_event'),
     path('add_comment/<int:e_id>/', views.add_comment, name='add_comment'),
+    path('events/', ListEventView.as_view(), name="events-all"),
 ]
