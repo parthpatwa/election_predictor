@@ -9,6 +9,8 @@ from rest_framework import generics
 import ssl
 import feedparser
 import datetime
+import urllib.request as urllib2
+import json
 from rest_framework.permissions import IsAuthenticated  # <-- Here
 
 
@@ -16,7 +18,7 @@ class ListArticleView(generics.ListAPIView):
     """
     Provides a get method handler.
     """
-    #permission_classes = (IsAuthenticated,)             # <-- And here
+    # permission_classes = (IsAuthenticated,)             # <-- And here
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
 
@@ -25,8 +27,16 @@ class ListArticleView(generics.ListAPIView):
 def articles_list(request):
     user = request.user
     user_profile = Profile.objects.get(profile__user__username=user)
-    user_location = user_profile.location
-    q = user_location+'election'
+    response = urllib2.urlopen('https://api.ipify.org/?format=json')
+    data = json.load(response)
+    ip = data['ip']
+    response = urllib2.urlopen(
+        'http://api.db-ip.com/addrinfo?api_key=bc2ab711d740d7cfa6fcb0ca8822cb327e38844f&addr=' + str(ip))
+    data = json.load(response)
+    user_state = data['stateprov']
+    user_location = user_state.replace(" ", "+")
+    # user_location = user_profile.location
+    q = user_location + 'election'
     k = Feed.objects.filter(query__query=q)
     k.delete()
     l = Query.objects.filter(query=q)
@@ -91,8 +101,8 @@ def new_feed(request):
         if form.is_valid():
             feed = form.save(commit=False)
             q = feed.query
-            #url = "https://news.google.com/rss/search?cf=all&pz=1&q="+q+"&hl=en-US&gl=US&ceid=US:en"
-            url="https://news.google.com/rss?/search?cf=all&pz=1&q="+q+"&hl=en-IN&gl=IN&ceid=IN:en"
+            # url = "https://news.google.com/rss/search?cf=all&pz=1&q="+q+"&hl=en-US&gl=US&ceid=US:en"
+            url = "https://news.google.com/rss?/search?cf=all&pz=1&q=" + q + "&hl=en-IN&gl=IN&ceid=IN:en"
             existingFeed = Feed.objects.filter(url=url)
             que = Query()
             que.query = feed.query
@@ -108,9 +118,9 @@ def new_feed(request):
                 feed.query = que
                 que.save()
                 feed.save()
-                i=0
+                i = 0
                 for entry in feedData.entries:
-                    if i>10:
+                    if i > 10:
                         break
                     article = Article()
                     article.title = entry.title
@@ -126,7 +136,7 @@ def new_feed(request):
                         article.save()
                     except:
                         pass
-                    i = i+1
+                    i = i + 1
             articles = Article.objects.filter(feed__url=url)
             rows = [articles[x:x + 1] for x in range(0, len(articles), 1)]
             return render(request, 'news_items/search_results.html', {'rows': rows})
@@ -163,7 +173,7 @@ def regional_news(request):
         if form.is_valid():
             feed = form.save(commit=False)
             q = feed.region
-            url="https://news.google.com/rss?/search?cf=all&pz=1&q="+q+"&hl=en-IN&gl=IN&ceid=IN:en"
+            url = "https://news.google.com/rss?/search?cf=all&pz=1&q=" + q + "&hl=en-IN&gl=IN&ceid=IN:en"
             existingFeed = Feed.objects.filter(url=url)
             que = Query()
             que.query = feed.region
@@ -179,9 +189,9 @@ def regional_news(request):
                 feed.query = que
                 que.save()
                 feed.save()
-                i=0
+                i = 0
                 for entry in feedData.entries:
-                    if i>15:
+                    if i > 15:
                         break
                     article = Article()
                     article.title = entry.title
@@ -197,7 +207,7 @@ def regional_news(request):
                         article.save()
                     except:
                         pass
-                    i = i+1
+                    i = i + 1
             articles = Article.objects.filter(feed__url=url)
             rows = [articles[x:x + 1] for x in range(0, len(articles), 1)]
             return render(request, 'news_items/regional_news_results.html', {'rows': rows})
@@ -213,7 +223,7 @@ def national_news(request):
     k.delete()
     l = Query.objects.filter(query=q)
     l.delete()
-    url="https://news.google.com/rss?/search?cf=all&pz=1&q="+q+"&hl=en-IN&gl=IN&ceid=IN:en"
+    url = "https://news.google.com/rss?/search?cf=all&pz=1&q=" + q + "&hl=en-IN&gl=IN&ceid=IN:en"
     existingFeed = Feed.objects.filter(url=url)
     que = Query()
     que.query = q
