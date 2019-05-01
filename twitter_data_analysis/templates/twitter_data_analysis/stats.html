@@ -4,7 +4,7 @@
 {% block nav %}
 
   		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
+			<li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:party:party' %}" style="color:white;padding-left:25px;padding-right: 25px">Home
 					<span class="sr-only">(current)</span>
 				</a>
@@ -12,20 +12,20 @@
 			<li class="nav-item">
 				<a class="nav-link" href="{% url 'authentication:group:group_list' request.user.pk %}" style="color:white;padding-left:20px;padding-right: 20px">Groups</a>
 			</li>
+            <li class="nav-item active">
+				<a class="nav-link" href="{% url 'authentication:party:data_analysis' %}" style="color:white;padding-left:20px;padding-right: 20px">Data Analysis</a>
+			</li>
+            <li class="nav-item">
+				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payments</a>
+			</li>
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false" style="padding-left:30px;padding-right: 50px; font-size:15px;">Sentiment Analysis</a>
+                aria-expanded="false" style="padding-top:12px;padding-left:20px;padding-right: 20px; font-size:15px;">Sentiment Analysis</a>
               <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="{% url 'authentication:party:sentimentanalysis:sentiment_analysis_single' %}" style="font-size:15px;">Single Predict</a>
                 <a class="dropdown-item" href="{% url 'authentication:party:sentimentanalysis:sentiment_analysis_batch' %}" style="font-size:15px;">Batch Predict</a>
               </div>
             </div>
-            <li class="nav-item">
-				<a class="nav-link" href="{% url 'authentication:party:data_analysis' %}" style="color:white;padding-left:20px;padding-right: 20px">Data Analysis</a>
-			</li>
-            <li class="nav-item">
-				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payment</a>
-			</li>
 		</ul>
 
 
@@ -33,23 +33,23 @@
 
 
 {% block content %}
-    <br><br><br><br><br>
-    <div>
-        <h4>Average positive tweet length:{{ pos_avg_lev }}</h4><br><br>
-        <h4>popular positive hash tags:{{ pos_hash }}</h4><br><br>
-        <h4>positive key words:{{ pos_words }}</h4><br><br>
-    </div>
-    <div>
-        <h4>Average negative tweet length:{{ neg_avg_len }}</h4><br><br>
-        <h4>popular negative hash tags:{{ neg_hash }}</h4><br><br>
-        <h4>negative key words:{{ neg_words }}</h4><br><br>
-    </div>
+    <div style="padding: 100px 100px 0px;background-color: white">
+        <span class="login100-form-title p-b-20" style="background: -webkit-linear-gradient(#2dfbff, #3c96ff); -webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">Polarity Analysis</span>
+        <p style="font-size: 14px">Average positive tweet length : <span style="font-size: 16px;font-weight: bold">{{ pos_avg_lev }}</span></p><br>
+        <p style="font-size: 14px">Popular positive hash tags : <span style="font-size: 16px;font-weight: bold">{{ pos_hash }}</span></p><br>
+        <p style="font-size: 14px">Positive key words : <span style="font-size: 16px;font-weight: bold">{{ pos_words }}</span></p><br><br><br>
 
-    <div id="g1"></div>
-    <div id="g2"></div>
-    <div id="g3"></div>
-    <div id="g4"></div>
+        <p style="font-size: 14px">Average negative tweet length : <span style="font-size: 16px;font-weight: bold">{{ neg_avg_len }}</span></p><br>
+        <p style="font-size: 14px">Popular negative hash tags : <span style="font-size: 16px;font-weight: bold">{{ neg_hash }}</span></p><br>
+        <p style="font-size: 14px;padding-bottom: 70px">Negative key words : <span style="font-size: 16px;font-weight: bold">{{ neg_words }}</span></p>
 
+        <center>
+        <p style="font-size: 16px;font-weight:bold">Positive vs Negative</p><div id="g1" class="p-b-70"></div>
+        <p style="font-size: 16px;font-weight:bold">Party wise Positive</span><div id="g2" class="p-b-70"></div>
+        <p style="font-size: 16px;font-weight:bold">Party wise Negative</p><br><div id="g3" class="p-b-70"></div>
+        <p style="font-size: 16px;font-weight:bold">Party wise Total Share</p><br><div id="g4"></div>
+        </center>
+    </div>
 
     <style media="screen">
       @import url(https://fonts.googleapis.com/css?family=Roboto);
@@ -62,7 +62,12 @@
         max-width: 650px;
         margin: 35px auto;
       }
+
+        #g4 {
+            padding-left: 300px;
+        }
     </style>
+
     <script type="text/javascript">
       var options_1 = {
       chart: {
@@ -154,4 +159,5 @@
       var chart_4 = new ApexCharts(document.querySelector("#g4"), options_4);
     chart_4.render();
     </script>
+
 {% endblock %}

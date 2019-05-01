@@ -63,13 +63,14 @@ def polarity_analysis_location(request, location=None):
         if usertype.is_party:
             profile = Party.objects.get(party__user_id=usertype.pk)
             if profile.credit_amount > 50:
-                stats, hashtags = get_stats_for_location(location)
+                stats, hashtags, personalities, values = get_stats_for_location(location)
                 count = stats['count']
                 avg_len = stats['avg_text_len']
                 words = stats['freq_words']
                 profile.credit_amount = profile.credit_amount - 50
                 profile.save()
-                return render(request, 'twitter_data_analysis/location_stats.html', {'hashtags': hashtags, 'count':count,'avg_len':avg_len,'words':words})
+                mylist = zip(personalities,values)
+                return render(request, 'twitter_data_analysis/location_stats.html', {'hashtags': hashtags, 'count':count,'avg_len':avg_len,'words':words,'mylist':mylist})
             else:
                 return render(request, 'party/data_analysis.html',
                               {'profile': profile, 'error': 'You don\'t have enough credits'})
