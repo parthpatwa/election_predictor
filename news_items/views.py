@@ -73,8 +73,10 @@ def articles_list(request):
 
 @login_required
 def feeds_list(request):
-    feeds = Feed.objects.filter(query__query_fk__user=request.user)
-    return render(request, 'news_items/feeds_list.html', {'feeds': feeds})
+    user_profile = Profile.objects.get(profile__user__username=request.user)
+    articles = Article.objects.filter(feed__query__query_fk__user=user_profile.profile)
+    rows = [articles[x:x + 1] for x in range(0, len(articles), 1)]
+    return render(request, 'news_items/articles_list_feeds.html', {'rows': rows})
 
 
 @login_required
