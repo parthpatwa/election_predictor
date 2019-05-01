@@ -42,7 +42,12 @@
           <input type="file" name="fileupload"><br>
           <input type="submit" value="submit" class="btn btn-primary" style="padding: 7px 15px 7px; border-radius: 5px; background: -webkit-linear-gradient(top, #2bfbff);"></div>
         </form>
-        <div style="font-size: 13px;margin-left: 200px;padding: 40px 0px 160px">Result : <span style="font-size: 17px;text-transform: uppercase">{{ result }}</span></div>
+        {% if flag %}
+            <div style="font-size: 13px;margin-left: 200px;padding: 40px 0px 160px">Result: <span style="font-size: 17px;text-transform: uppercase">Positive reviews: {{ pos_count }}<br>Negative reviews: {{ neg_count }}<br>Percentage of positive reviews: {{ pos_per }}</span></div>
+        {% else %}
+        {% endif %}
+        {% if result %}
+            <div style="font-size: 13px;margin-left: 200px;padding: 40px 0px 160px">Result: <span style="font-size: 17px;text-transform: uppercase">{{ result }}</span></div>
+        {% endif %}
         </div>
-
 {% endblock %}
