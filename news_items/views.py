@@ -4,9 +4,21 @@ from .models import Article, Feed, Query
 from authentication.models import Usertype
 from .forms import FeedForm, RegionForm
 from authentication.models import Profile
+from .serializers import ArticleSerializer
+from rest_framework import generics
 import ssl
 import feedparser
 import datetime
+from rest_framework.permissions import IsAuthenticated  # <-- Here
+
+
+class ListArticleView(generics.ListAPIView):
+    """
+    Provides a get method handler.
+    """
+    #permission_classes = (IsAuthenticated,)             # <-- And here
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
 
 
 @login_required

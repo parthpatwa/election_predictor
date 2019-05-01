@@ -36,5 +36,8 @@ urlpatterns = [
          name='password_reset_confirm'),
     path('password_reset_complete/',
          auth_views.PasswordResetCompleteView.as_view(template_name='registration/reset_password_complete.html'),
-         name='password_reset_complete')
+         name='password_reset_complete'),
+    re_path('api/(?P<version>(v1|v2))/', include('news_items.urls')),
+    re_path('apievents/(?P<version>(v1|v2))/', include('group.urls')),
+
 ]

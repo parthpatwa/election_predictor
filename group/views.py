@@ -7,6 +7,18 @@ from group.forms import GroupRegistration, EventRegistration, Comments, Get_Loca
 from .models import GroupMembers, Group, Event, EventMembers, EventForum
 from authentication.models import Profile, Usertype, Party
 from django.db import connection
+from .serializers import EventSerializer
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated  # <-- Here
+
+
+class ListEventView(generics.ListAPIView):
+    """
+    Provides a get method handler.
+    """
+    #permission_classes = (IsAuthenticated,)             # <-- And here
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
 
 
 @login_required
