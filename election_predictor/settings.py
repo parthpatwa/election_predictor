@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'bootstrapform',
     'widget_tweaks',
     'twitter_data_analysis',
-    'sentimentanalysis'
+    'sentimentanalysis',
+    'pymysql',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'election_predictordb',
         'USER': 'root',
-        'PASSWORD': 'mysqlroot',
+        'PASSWORD': 'thota1234',
         'HOST': 'localhost',
         'PORT': '',
     }
