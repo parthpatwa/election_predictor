@@ -16,7 +16,7 @@
 				<a class="nav-link" href="{% url 'authentication:party:data_analysis' %}" style="color:white;padding-left:20px;padding-right: 20px">Data Analysis</a>
 			</li>
             <li class="nav-item">
-				<a class="nav-link" href="#" style="color:white;padding-left:20px;padding-right: 20px">Payments</a>
+				<a class="nav-link" href="{% url 'authentication:party:payment_details' %}" style="color:white;padding-left:20px;padding-right: 20px">Payment</a>
 			</li>
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
@@ -42,6 +42,8 @@
         <p style="font-size: 14px">Average negative tweet length : <span style="font-size: 16px;font-weight: bold">{{ neg_avg_len }}</span></p><br>
         <p style="font-size: 14px">Popular negative hash tags : <span style="font-size: 16px;font-weight: bold">{{ neg_hash }}</span></p><br>
         <p style="font-size: 14px;padding-bottom: 70px">Negative key words : <span style="font-size: 16px;font-weight: bold">{{ neg_words }}</span></p>
+
+        <p style="font-size: 16px;padding-bottom: 70px">Your Current Lead : <span style="font-size: 20px;font-weight: bold">{{ lead }}</span></p>
 
         <center>
         <p style="font-size: 16px;font-weight:bold">Positive vs Negative</p><div id="g1" class="p-b-70"></div>
