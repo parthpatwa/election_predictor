@@ -25,7 +25,6 @@ def predict_review(request):
 
 @login_required
 def batch_predict(request):
-    result = ''
     usertype = Usertype.objects.get(user_id=request.user.pk)
     if usertype.is_party:
         profile = Party.objects.get(party__user_id=usertype.pk)
@@ -37,13 +36,15 @@ def batch_predict(request):
                 review_type = request.POST.get('type')
                 if file1 == None:
                     result = 'No file uploaded.'
-                    return render(request, 'sentimentanalysis/batch_predict.html', {'result': result, 'profile': profile})
+                    return render(request, 'sentimentanalysis/batch_predict.html',
+                                  {'result': result, 'profile': profile})
 
                 ext = file1.name
                 if ((not ".txt" in ext) or (file1.content_type != 'text/plain')) and (
                         (not ".csv" in ext) or (file1.content_type != 'application/vnd.ms-excel')):
                     result = 'Please upload .txt or .csv file only.'
-                    return render(request, 'sentimentanalysis/batch_predict.html', {'result': result, 'profile': profile})
+                    return render(request, 'sentimentanalysis/batch_predict.html',
+                                  {'result': result, 'profile': profile})
 
                 lst = file1.read().splitlines()
                 nlist = []
@@ -62,14 +63,16 @@ def batch_predict(request):
                         neg_count += 1  # send to django
                 total_count = pos_count + neg_count  # send to django
                 pos_per = pos_count / total_count * 100  # send to django
-                result = "Positive review:   " + str(pos_count) + " \nNegative review:  " + str(
-                    neg_count) + "  \nPercentage of positive review: " + str(pos_per) + "%"
+
                 # temp = AccountBalance.objects.get(user = request.user)
                 # bal = float(temp.balance)-float(50)
                 profile.credits_amount = bal
                 profile.save()
+                return render(request, 'sentimentanalysis/batch_predict.html',
+                              {'pos_count': pos_count, 'neg_count': neg_count, 'pos_per': pos_per, 'flag': 1,
+                               'profile': profile})  # change
                 # return render(request, 'predictReview/batch_predict.html', {'result' : result})
             else:
                 result = "Insufficient Credits "
 
-        return render(request, 'sentimentanalysis/batch_predict.html', {'result': result, 'profile': profile})  # change
+        return render(request, 'sentimentanalysis/batch_predict.html', {'profile': profile})

@@ -1,8 +1,41 @@
 {% extends 'news_items/base.html' %}
-{% block content %}
 {% load static %}
 {% load bootstrap %}
 {% load widget_tweaks %}
+
+{% block nav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'authentication:news_items:articles_list' %}"
+           style="color:white;padding-left:20px;padding-right: 20px">Home
+            <span class="sr-only">(current)</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'authentication:news_items:regional_news' %}"
+           style="color:white;padding-left:20px;padding-right: 20px">Regional News</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'authentication:news_items:national_news' %}"
+           style="color:white;padding-left:20px;padding-right: 20px">National News</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'authentication:news_items:feed_new' %}" style="color:white;padding-left:20px;padding-right: 20px">Search</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'authentication:group:events_location' %}"
+           style="color:white;padding-left:20px;padding-right: 20px">Events</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'authentication:news_items:feeds_list' %}"
+           style="color:white;padding-left:20px;padding-right: 20px">News Feed</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'authentication:news_items:saved_queries' %}"
+           style="color:white;padding-left:20px;padding-right: 20px">Saved Searches</a>
+{% endblock %}
+
+{% block content %}
+
     <span class="login100-form-title p-t-100 p-b-30" style="background: #3c96ff; background: -webkit-linear-gradient(45deg, #2dfbff, #3c96ff);
 						-webkit-background-clip: text;-webkit-text-fill-color: transparent; font-size:30px;">
                     Requested Groups:
